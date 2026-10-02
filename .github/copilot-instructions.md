@@ -74,3 +74,60 @@ Dostarczona umiejętność nie zawiera odniesień do 10xDevs / kohort / certyfik
 Umiejętności nie mogą zapisywać do `context/archive/`. Zarchiwizowane zmiany są niezmienne; jeśli rozpoznana ścieżka docelowa zaczyna się od `context/archive/`, przerwij z komunikatem: „Ta zmiana jest zarchiwizowana. Zamiast tego otwórz nową zmianę za pomocą `/10x-new`.”
 
 <!-- END @przeprogramowani/10x-cli -->
+
+# MelodyBooker — Repository Instructions
+
+## What this is
+
+MelodyBooker is a greenfield ASP.NET Core MVC app (net10.0) for a single music
+school: teachers reserve rehearsal rooms for their students' weekly lessons,
+and the system enforces that rooms with specialist non-portable instruments
+(piano, xylophone, drums) are prioritized for students who play those
+instruments. Full requirements, personas, and functional requirements live in
+`context/foundation/prd.md`; the chosen stack and rationale are in
+`context/foundation/tech-stack.md`. The repo is currently at the
+default-template stage (`dotnet new mvc` output) — no auth, EF Core, database,
+or booking logic has been implemented yet. Read the PRD before implementing
+any feature so new code matches the documented FRs/roles.
+
+## Build & run
+
+- Solution: `melodybooker.sln`; the only project is `src\melody\melody.csproj`.
+- Build: `dotnet build melodybooker.sln`
+- Run: `dotnet run --project src\melody\melody.csproj`
+- No test project exists yet. If you add one, use `dotnet test` conventions
+  (e.g. `dotnet test --filter FullyQualifiedName~TestClassName.TestMethodName`
+  to run a single test) and register it in `melodybooker.sln`.
+- No linter/formatter config exists; prefer `dotnet format` if one is added.
+- No CI workflows exist in `.github/workflows` yet; `tech-stack.md` records
+  the intended target as GitHub Actions with auto-deploy-on-merge to Azure
+  App Service, but nothing is wired up yet.
+
+## Architecture & conventions
+
+- Standard ASP.NET Core MVC layout: `Controllers/`, `Models/`, `Views/`,
+  `wwwroot/`, configured in `Program.cs` using the default minimal hosting
+  model (`WebApplication.CreateBuilder`), `AddControllersWithViews()`, and
+  conventional routing (`{controller=Home}/{action=Index}/{id?}`).
+  `appsettings.json` / `appsettings.Development.json` hold config; no
+  connection string or EF Core `DbContext` is configured yet.
+- `Nullable` and `ImplicitUsings` are both enabled in the `.csproj` — write
+  nullable-aware C# and skip boilerplate `using` statements for BCL
+  namespaces.
+- Per the PRD, two roles will exist: **Administrator** (manages
+  teachers/students/assignments, sees and edits all reservations) and
+  **Teacher** (reserves rooms only for their own assigned students). Students
+  have no login. When implementing auth/authorization, model these two roles
+  explicitly and scope teacher-facing queries/actions to their own students.
+- Key domain rules from the PRD to preserve when implementing booking logic:
+  - Lesson duration is derived from the student's class, not user input:
+    20 minutes for classes 1–4, 40 minutes for classes 5–8 (FR-009).
+  - Bookings are weekly-recurring for the full school year; double-booking
+    the same room/time slot must always be hard-blocked, with no override
+    (FR-008, FR-010).
+  - Booking a specialist room (piano/xylophone/drums) for a student who
+    doesn't play that instrument is a **soft** warning, not a block (FR-011);
+    hard-blocking mismatches is an explicit nice-to-have (FR-012), not MVP
+    scope — don't implement it unless asked.
+- `context/foundation/` is the source of truth for product scope; don't
+  duplicate or re-derive requirements elsewhere — reference the PRD instead.
