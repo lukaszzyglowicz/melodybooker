@@ -1,1 +1,2 @@
 /10x-shape @context-idea-notes.md
+/10x-prd
