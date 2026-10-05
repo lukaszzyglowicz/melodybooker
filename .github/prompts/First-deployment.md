@@ -1,0 +1,1 @@
+Wykonaj pierwsze wdrożenie. Domknij przygotowania (konto Azure, login, baza , login), zatwierdź plan i pozwól agentowi przejść do implementacji. Twoja rola: konfiguracja sekretów, uzupełnianie luk i weryfikacja stanu końcowego Bedzie to phase 0
