@@ -1,2 +1,14 @@
 /10x-shape @context-idea-notes.md
 /10x-prd
+//10x-tech-stack-selector
+//10xinfra
+"Wykonajmy pierwsze plan wdrożenia w oparciu o @infrastructure.md, zgodnie ze stackiem z @tech-stack.md".
+to ma byc planowanie a nie samo gotowe wdrozenie
+
+Wykonaj research platformy. Uruchom /10x-infra-research z context/foundation/tech-stack.md jako wsadem. Odpowiedz uczciwie na pytania wywiadu (region, długo działające procesy, budżet, portfolio), a po scoringu przepuść wynik przez trzy testy anti-bias: devil's advocate, pre-mortem i unknown unknowns.
+
+Zdefiniuj plan deploymentu. Wejdź w Plan Mode i przygotuj wdrożenie: "Wykonajmy pierwsze wdrożenie w oparciu o @infrastructure.md, zgodnie ze stackiem z @tech-stack.md". Oceń plan, popraw braki, zapisz go jako context/deployment/deploy-plan.md.
+
+Wykonaj pierwsze wdrożenie. Domknij przygotowania (konto Azure, login, baza Supabase, gh auth login), zatwierdź plan i pozwól agentowi przejść do implementacji. Twoja rola: konfiguracja sekretów, uzupełnianie luk i weryfikacja stanu końcowego Bedzie to phase 0  . Po deployu otwórz publiczny URL aplikacji i pochwal się nim na 10xDevs Arena (Circle).
+
+Wykonaj pierwsze wdrożenie. Domknij przygotowania (konto Azure, login, baza , login), zatwierdź plan i pozwól agentowi przejść do implementacji. Twoja rola: konfiguracja sekretów, uzupełnianie luk i weryfikacja stanu końcowego Bedzie to phase 0
