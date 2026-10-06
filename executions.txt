@@ -12,3 +12,6 @@ Zdefiniuj plan deploymentu. Wejdź w Plan Mode i przygotuj wdrożenie: "Wykonajm
 Wykonaj pierwsze wdrożenie. Domknij przygotowania (konto Azure, login, baza Supabase, gh auth login), zatwierdź plan i pozwól agentowi przejść do implementacji. Twoja rola: konfiguracja sekretów, uzupełnianie luk i weryfikacja stanu końcowego Bedzie to phase 0  . Po deployu otwórz publiczny URL aplikacji i pochwal się nim na 10xDevs Arena (Circle).
 
 Wykonaj pierwsze wdrożenie. Domknij przygotowania (konto Azure, login, baza , login), zatwierdź plan i pozwól agentowi przejść do implementacji. Twoja rola: konfiguracja sekretów, uzupełnianie luk i weryfikacja stanu końcowego Bedzie to phase 0
+
+
+/10x-roadmap rozpocznijmy prace nad roadmapa /path to prd.md

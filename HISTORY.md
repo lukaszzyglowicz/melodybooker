@@ -81,6 +81,40 @@ odtworzony w `C:\10xDev\melodybooker`.
 - Publiczny link "Register" na stronie logowania — wg PRD tylko
   Administrator/Teacher powinni mieć konta, bez samorejestracji.
 
+## Faza 4 — Mapa drogowa (2026-10-06)
+
+| # | Skill / komenda | Wynik |
+|---|---|---|
+| 15 | `/10x-roadmap` | `context/foundation/roadmap.md` — otwarty pierwszy kamień milowy **M-1: First usable booking MVP** (`first-usable-booking-mvp`) |
+
+**Co zrobiono:**
+
+1. Dyspozycja stanu kamienia milowego: brak istniejącej mapy drogowej →
+   pierwsze uruchomienie (`NO_MILESTONE → ACTIVE`).
+2. Źródło: `context/foundation/prd.md` (v1) — kontrola gotowości PRD: 4/4.
+3. Automatyczne badanie stanu bazowego kodu (bez pytania użytkownika):
+   Frontend/Backend — partial (tylko domyślny szkielet Razor/HomeController);
+   Data — partial (modele EF Core + migracja `InitialCreate` już są, unikalny
+   indeks `(RoomId, DayOfWeek, StartTime)` częściowo wymusza FR-010); Auth —
+   partial (Identity + role `Administrator`/`Teacher` zasiane, ale brak
+   wymuszania autoryzacji na kontrolerach i brak konta admina); Deploy/infra —
+   absent (pusty `.github/workflows`); Observability — present (Application
+   Insights + `/health`).
+4. Zwięzły wywiad (3 pytania kotwiczące): `main_goal: speed` (twardy deadline
+   2026-12-10, budżet 3 tyg. after-hours), gwiazda przewodnia: **S-03 —
+   nauczyciel rezerwuje salę na cotygodniową lekcję** (US-01, FR-008/009/010),
+   `top_blocker: capacity` (solo developer, praca tylko wieczorami/weekendami).
+5. Wygenerowano dekompozycję: 2 Foundations (`F-01` role-based-authorization —
+   status `ready`; `F-02` deployment-skeleton — status `blocked` na
+   potwierdzeniu zasobu Azure) + 5 Slices (`S-01` admin-roster-management,
+   `S-02` teacher-student-list, `S-03` teacher-books-room *(north star)*,
+   `S-04` specialist-instrument-warning, `S-05` admin-reservation-oversight).
+   Pokrycie PRD: 13/13 must-have FR. Nice-to-have (FR-012, FR-015, FR-016) i
+   wszystkie Non-Goals trafiły do `## Parked`.
+6. Rekomendowany następny ruch: `/10x-plan role-based-authorization` (F-01) —
+   jako jedyny element `ready`, bezpośrednio odblokowuje łańcuch do gwiazdy
+   przewodniej S-03.
+
 ---
 
 *Ten plik należy aktualizować po każdej większej fazie pracy (nowy skill,
