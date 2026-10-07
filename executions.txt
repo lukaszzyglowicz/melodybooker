@@ -23,3 +23,10 @@ I would like to convert @context\foundation\roadmap.md into a set of gthub issie
 
 m2l2
 roadmap item -> change-id -> plan.md -> plan review -> implementacja fazy -> Progress
+
+/10x-new role-based-authorization F-01 z roadmap.md
+/10x-plan role-based-authorization
+/10x-implement role-based-authorization phase 1
+sam zakomitowalem zmiany kontynuuj
+(kontynuacja /10x-implement: Phase 1 SHA write-back, decyzja "continue_delegate", Phase 2 zaimplementowana przez subagenta, build gate PASS, manual verification gate)
+zaktualizuj mi co zrobilemy tearaz w History.md oraz executions.txt w executions.txt zapsuje jaki commendy wywyaolywamen

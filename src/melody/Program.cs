@@ -72,6 +72,7 @@ using (var scope = app.Services.CreateScope())
     await db.Database.MigrateAsync();
 
     await RoleSeeder.SeedAsync(scope.ServiceProvider);
+    await AdminUserSeeder.SeedAsync(scope.ServiceProvider, app.Configuration);
 }
 
 app.Run();

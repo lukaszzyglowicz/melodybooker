@@ -154,6 +154,53 @@ odtworzony w `C:\10xDev\melodybooker`.
 **Status na koniec:** 7 otwartych issues w milestone M-1, gotowych do
 `/10x-plan` zaczynając od `#1` (F-01, jedyny `status:ready`).
 
+## Faza 6 — F-01: role-based authorization & seeded admin (2026-10-07/08, w toku)
+
+Łańcuch: `/10x-new → /10x-plan → /10x-implement` dla pierwszego elementu
+roadmapy ze statusem `ready`.
+
+| # | Skill / komenda | Wynik |
+|---|---|---|
+| 17 | `/10x-new role-based-authorization F-01 z roadmap.md` | `context/changes/role-based-authorization/change.md` (status `new`) |
+| 18 | `/10x-plan role-based-authorization` | `plan.md` (5 faz) + `plan-brief.md`; `change.md` → `planned`; roadmap F-01 → `planning` |
+| 19 | `/10x-implement role-based-authorization phase 1` | `change.md` → `implementing`; roadmap F-01 → `in-progress`; Phase 1 wykonana |
+
+**Odkryta luka planistyczna:** Fazy 1-4 zawierają automatyczne wiersze
+Progress odwołujące się do testów integracyjnych/jednostkowych, które mogą
+powstać dopiero w Fazie 5 (nowy projekt testowy). Decyzja użytkownika:
+"Adapt and continue" — fazy 1-4 implementowane normalnie, wiersze zależne od
+testów zostają `[ ]` z adnotacją „(awaits Phase 5 test project)” i zostaną
+retrospektywnie odznaczone SHA-em commita Fazy 5.
+
+**Faza 1 — Global authorization policy** (delegowana do subagenta):
+- `src/melody/Program.cs` — dodano `AddAuthorization` z globalną polityką
+  `FallbackPolicy = RequireAuthenticatedUser()`.
+- `src/melody/Controllers/HomeController.cs` — dodano atrybut `[Authorize]`.
+- Gate build: PASS. Weryfikacja manualna: potwierdzona przez użytkownika.
+- Commit (wykonany ręcznie przez użytkownika, nie przez agenta):
+  `8f3ac3a4` „/10x-new, /10x-plan, /10x-plan-review i /10x-implement
+  role-based-authorization phase 1” — objął też `context/foundation/roadmap.md`
+  (flipped F-01 → in-progress), mimo że miał zostać poza commitem wg
+  wcześniejszej decyzji; zweryfikowano `git show --stat` i zaakceptowano jako
+  zamykający commit Fazy 1. SHA dopisany do wierszy Progress 1.1/1.3/1.4.
+
+**Faza 2 — Seeded administrator account** (delegowana do subagenta):
+- `src/melody/Data/AdminUserSeeder.cs` (nowy) — idempotentny seeder konta
+  Administrator z konfiguracji (`Admin:Email`/`Admin:Password`), wzorowany na
+  `RoleSeeder`; bezpieczny (nie rzuca wyjątku) gdy brak konfiguracji.
+- `src/melody/Program.cs` — wywołanie `AdminUserSeeder.SeedAsync(...)` po
+  `RoleSeeder.SeedAsync(...)`.
+- `src/melody/appsettings.json` / `appsettings.Development.json` — dodano
+  pusty placeholder `"Admin": { "Email": "", "Password": "" }` (bez
+  prawdziwych sekretów; lokalnie przez `dotnet user-secrets`).
+- Gate build: PASS (0 błędów). Oczekiwanie na weryfikację manualną wiersza
+  2.4 (logowanie jako skonfigurowany administrator) — **jeszcze niescommitowane**
+  w momencie zapisania tego wpisu.
+
+**Status na koniec tego wpisu:** Fazy 1-2 zaimplementowane i zweryfikowane
+build-em; Faza 1 scommitowana (`8f3ac3a4`), Faza 2 czeka na potwierdzenie
+manualne użytkownika i rytuał commitu. Pozostają Fazy 3-5.
+
 ---
 
 *Ten plik należy aktualizować po każdej większej fazie pracy (nowy skill,

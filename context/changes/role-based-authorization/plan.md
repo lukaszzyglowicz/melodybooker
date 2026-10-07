@@ -329,25 +329,25 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 
 #### Automated
 
-- [x] 1.1 Solution builds: `dotnet build melodybooker.sln`
+- [x] 1.1 Solution builds: `dotnet build melodybooker.sln` — 8f3ac3a
 - [ ] 1.2 Integration test: anonymous `GET /` redirects to login path (awaits Phase 5 test project)
 
 #### Manual
 
-- [x] 1.3 Visiting `/` while logged out redirects to `/Identity/Account/Login`
-- [x] 1.4 Visiting `/Identity/Account/Login` while logged out still loads
+- [x] 1.3 Visiting `/` while logged out redirects to `/Identity/Account/Login` — 8f3ac3a
+- [x] 1.4 Visiting `/Identity/Account/Login` while logged out still loads — 8f3ac3a
 
 ### Phase 2: Seeded administrator account
 
 #### Automated
 
-- [ ] 2.1 Solution builds: `dotnet build melodybooker.sln`
-- [ ] 2.2 Unit test: `AdminUserSeeder.SeedAsync` called twice yields exactly one Administrator user
-- [ ] 2.3 Unit test: `AdminUserSeeder.SeedAsync` does not throw when `Admin:Email`/`Admin:Password` are unset
+- [x] 2.1 Solution builds: `dotnet build melodybooker.sln`
+- [ ] 2.2 Unit test: `AdminUserSeeder.SeedAsync` called twice yields exactly one Administrator user (awaits Phase 5 test project)
+- [ ] 2.3 Unit test: `AdminUserSeeder.SeedAsync` does not throw when `Admin:Email`/`Admin:Password` are unset (awaits Phase 5 test project)
 
 #### Manual
 
-- [ ] 2.4 Logging in with configured `Admin:Email`/`Admin:Password` succeeds and is recognized as Administrator
+- [x] 2.4 Logging in with configured `Admin:Email`/`Admin:Password` succeeds and is recognized as Administrator
 
 ### Phase 3: Lock down public self-registration
 
