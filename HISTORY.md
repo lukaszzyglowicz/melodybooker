@@ -115,6 +115,45 @@ odtworzony w `C:\10xDev\melodybooker`.
    jako jedyny element `ready`, bezpośrednio odblokowuje łańcuch do gwiazdy
    przewodniej S-03.
 
+## Faza 5 — Migracja mapy drogowej na GitHub Issues (2026-10-06)
+
+| # | Skill / komenda | Wynik |
+|---|---|---|
+| 16 | Migracja `roadmap.md` → GitHub Issues (ręczne polecenie, nie skill 10x) | Milestone `M-1` + 6 etykiet + 7 issues w `lukaszzyglowicz/melodybooker` |
+
+**Co zrobiono:**
+
+1. Zainstalowano i skonfigurowano `gh` (GitHub CLI) — binarka była już obecna
+   przez winget, ale brakowało jej na `PATH` oraz logowania. Uwierzytelniono
+   się przez flow przeglądarkowy (`gh auth login --web`, device code) jako
+   `lukaszzyglowicz`, ponieważ wklejony PAT dotarł zamaskowany (`******`) i
+   nie nadawał się do użycia w poleceniu.
+2. Potwierdzono plan migracji z użytkownikiem (1 issue na każdy `F-NN`/`S-NN`,
+   milestone, etykiety, bez ruszania `roadmap.md` i bez GitHub Projects).
+3. Utworzono milestone **„M-1: First usable booking MVP”** (opis = Intent
+   kamienia milowego z roadmapy).
+4. Utworzono etykiety: `roadmap`, `foundation`, `slice`, `status:ready`,
+   `status:blocked`, `status:proposed`.
+5. Utworzono 7 issues w kolejności topologicznej (F-01, F-02, S-01..S-05),
+   każdy z treścią przeniesioną 1:1 z roadmapy (Outcome, PRD refs,
+   Prerequisites, Parallel with, Blockers, Unknowns, Risk, Unlocks, Status) +
+   etykietami `roadmap` + `foundation`/`slice` + `status:*` + milestone M-1:
+   - `#1` F-01 role-based-authorization — `status:ready`
+   - `#2` F-02 deployment-skeleton — `status:blocked` (czeka na potwierdzenie zasobu Azure)
+   - `#3` S-01 admin-roster-management
+   - `#4` S-02 teacher-student-list
+   - `#5` S-03 teacher-books-room — ⭐ north star
+   - `#6` S-04 specialist-instrument-warning
+   - `#7` S-05 admin-reservation-oversight
+6. Drugi przebieg: zaktualizowano treść wszystkich 7 issues, podmieniając
+   odwołania `Prerequisites`/`Unlocks`/`Parallel with` z identyfikatorów
+   roadmapy (`F-01`, `S-03`, …) na rzeczywiste linki do issues (`#1`, `#5`, …).
+7. Posprzątano pliki tymczasowe (`%TEMP%\mb-issues`); `context/foundation/roadmap.md`
+   pozostał nietknięty jako jedyne źródło prawdy dla mapy drogowej.
+
+**Status na koniec:** 7 otwartych issues w milestone M-1, gotowych do
+`/10x-plan` zaczynając od `#1` (F-01, jedyny `status:ready`).
+
 ---
 
 *Ten plik należy aktualizować po każdej większej fazie pracy (nowy skill,

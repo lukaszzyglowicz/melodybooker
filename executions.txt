@@ -15,3 +15,11 @@ Wykonaj pierwsze wdrożenie. Domknij przygotowania (konto Azure, login, baza , l
 
 
 /10x-roadmap rozpocznijmy prace nad roadmapa /path to prd.md
+
+
+Przeniesienie danych zadane do github issues
+I would like to convert @context\foundation\roadmap.md into a set of gthub issies. Identity task management system, and after my approval migrate roadmap to guthyb using Github CLLI
+
+
+m2l2
+roadmap item -> change-id -> plan.md -> plan review -> implementacja fazy -> Progress
