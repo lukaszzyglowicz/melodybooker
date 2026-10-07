@@ -10,6 +10,16 @@ public class HomeController : Controller
 {
     public IActionResult Index()
     {
+        if (User.IsInRole("Administrator"))
+        {
+            return RedirectToAction("Index", "Admin");
+        }
+
+        if (User.IsInRole("Teacher"))
+        {
+            return RedirectToAction("Index", "Teacher");
+        }
+
         return View();
     }
 

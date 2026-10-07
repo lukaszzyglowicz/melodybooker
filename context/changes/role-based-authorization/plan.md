@@ -353,24 +353,24 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 
 #### Automated
 
-- [x] 3.1 Solution builds: `dotnet build melodybooker.sln`
+- [x] 3.1 Solution builds: `dotnet build melodybooker.sln` — 81d9859
 - [ ] 3.2 Integration test: anonymous `GET /Identity/Account/Register` does not return 200 (awaits Phase 5 test project)
 - [ ] 3.3 Integration test: Teacher-role `GET /Identity/Account/Register` returns 403 (awaits Phase 5 test project)
 
 #### Manual
 
-- [x] 3.4 Logged out, nav shows only "Login" (no "Register")
-- [x] 3.5 Logged in as Administrator, nav shows "Register" and the page loads
+- [x] 3.4 Logged out, nav shows only "Login" (no "Register") — 399aa58
+- [x] 3.5 Logged in as Administrator, nav shows "Register" and the page loads — 399aa58
 - [ ] 3.6 Logged in as Teacher, nav hides "Register" and the direct URL shows Access Denied (awaits S-01 teacher account creation; no way to create a Teacher user yet)
 
 ### Phase 4: Role-scoped landing stubs
 
 #### Automated
 
-- [ ] 4.1 Solution builds: `dotnet build melodybooker.sln`
-- [ ] 4.2 Integration test: Administrator `GET /Admin` → 200, `GET /Teacher` → 403
-- [ ] 4.3 Integration test: Teacher `GET /Teacher` → 200, `GET /Admin` → 403
-- [ ] 4.4 Integration test: login redirects each role to its own controller
+- [x] 4.1 Solution builds: `dotnet build melodybooker.sln`
+- [ ] 4.2 Integration test: Administrator `GET /Admin` → 200, `GET /Teacher` → 403 (awaits Phase 5 test project)
+- [ ] 4.3 Integration test: Teacher `GET /Teacher` → 200, `GET /Admin` → 403 (awaits Phase 5 test project)
+- [ ] 4.4 Integration test: login redirects each role to its own controller (awaits Phase 5 test project)
 
 #### Manual
 
