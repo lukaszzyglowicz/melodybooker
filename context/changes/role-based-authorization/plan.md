@@ -341,21 +341,21 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 
 #### Automated
 
-- [x] 2.1 Solution builds: `dotnet build melodybooker.sln`
+- [x] 2.1 Solution builds: `dotnet build melodybooker.sln` — 00f03f4
 - [ ] 2.2 Unit test: `AdminUserSeeder.SeedAsync` called twice yields exactly one Administrator user (awaits Phase 5 test project)
 - [ ] 2.3 Unit test: `AdminUserSeeder.SeedAsync` does not throw when `Admin:Email`/`Admin:Password` are unset (awaits Phase 5 test project)
 
 #### Manual
 
-- [x] 2.4 Logging in with configured `Admin:Email`/`Admin:Password` succeeds and is recognized as Administrator
+- [x] 2.4 Logging in with configured `Admin:Email`/`Admin:Password` succeeds and is recognized as Administrator — 00f03f4
 
 ### Phase 3: Lock down public self-registration
 
 #### Automated
 
-- [ ] 3.1 Solution builds: `dotnet build melodybooker.sln`
-- [ ] 3.2 Integration test: anonymous `GET /Identity/Account/Register` does not return 200
-- [ ] 3.3 Integration test: Teacher-role `GET /Identity/Account/Register` returns 403
+- [x] 3.1 Solution builds: `dotnet build melodybooker.sln`
+- [ ] 3.2 Integration test: anonymous `GET /Identity/Account/Register` does not return 200 (awaits Phase 5 test project)
+- [ ] 3.3 Integration test: Teacher-role `GET /Identity/Account/Register` returns 403 (awaits Phase 5 test project)
 
 #### Manual
 
