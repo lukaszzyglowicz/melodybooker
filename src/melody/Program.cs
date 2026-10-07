@@ -34,7 +34,17 @@ builder.Services.AddAuthorization(options =>
 });
 
 builder.Services.AddRazorPages();
-builder.Services.AddApplicationInsightsTelemetry();
+
+// Application Insights requires a connection string, which Azure App Service injects
+// automatically (APPLICATIONINSIGHTS_CONNECTION_STRING) but no local dev environment sets.
+// Only wire it up when one is actually configured, so `dotnet run` works locally too.
+var appInsightsConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"]
+    ?? builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+if (!string.IsNullOrWhiteSpace(appInsightsConnectionString))
+{
+    builder.Services.AddApplicationInsightsTelemetry();
+}
+
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<ApplicationDbContext>();
 

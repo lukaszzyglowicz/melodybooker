@@ -359,9 +359,9 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 
 #### Manual
 
-- [ ] 3.4 Logged out, nav shows only "Login" (no "Register")
-- [ ] 3.5 Logged in as Administrator, nav shows "Register" and the page loads
-- [ ] 3.6 Logged in as Teacher, nav hides "Register" and the direct URL shows Access Denied
+- [x] 3.4 Logged out, nav shows only "Login" (no "Register")
+- [x] 3.5 Logged in as Administrator, nav shows "Register" and the page loads
+- [ ] 3.6 Logged in as Teacher, nav hides "Register" and the direct URL shows Access Denied (awaits S-01 teacher account creation; no way to create a Teacher user yet)
 
 ### Phase 4: Role-scoped landing stubs
 
