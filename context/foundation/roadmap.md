@@ -3,7 +3,7 @@ project: "MelodyBooker"
 version: 1
 status: draft
 created: 2026-10-06
-updated: 2026-10-07
+updated: 2026-10-09
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
@@ -43,7 +43,7 @@ Music teachers currently plan room reservations by hand in Excel, which cannot e
 | ---- | ---------------------------- | ---------------------------------------------------------------------------------- | -------------- | ------------------------------- | -------- |
 | F-01 | role-based-authorization     | (foundation) Role-scoped login/authorization enforced; admin account seeded        | —              | FR-001, FR-002, Access Control  | in-progress |
 | F-02 | deployment-skeleton          | (foundation) App deploys to Azure App Service via GitHub Actions on merge          | —              | tech-stack.md deployment target | blocked  |
-| S-01 | admin-roster-management      | Administrator adds/edits/removes teachers and students, assigns student→teacher    | F-01           | FR-003, FR-004, FR-005, FR-006  | proposed |
+| S-01 | admin-roster-management      | Administrator adds/edits/removes teachers and students, assigns student→teacher    | F-01           | FR-003, FR-004, FR-005, FR-006  | in-progress |
 | S-02 | teacher-student-list         | Teacher logs in and sees the list of their assigned students                        | F-01, S-01     | FR-007                          | proposed |
 | S-03 | teacher-books-room           | Teacher reserves a room for a student's weekly lesson (auto duration, no double-booking) | F-01, S-02 | FR-008, FR-009, FR-010, US-01   | proposed |
 | S-04 | specialist-instrument-warning| Teacher sees a soft warning before confirming a specialist-room/mismatched-student booking | S-03    | FR-011, US-02                   | proposed |
@@ -113,7 +113,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** FR-006's reassign-or-block deletion semantics must be built in from the start — retrofitting it after S-02/S-03 exist and already reference students/teachers would be far riskier.
-- **Status:** proposed
+- **Status:** in-progress
 
 ### S-02: Teacher views assigned students
 
