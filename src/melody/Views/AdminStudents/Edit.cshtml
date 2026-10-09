@@ -1,0 +1,42 @@
+@using melody.Models.ViewModels
+@using melody.Models.Domain
+@model StudentFormViewModel
+@{
+    ViewData["Title"] = "Edit student";
+}
+
+<h1>Edit student</h1>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group mb-3">
+        <label asp-for="FullName" class="control-label"></label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Class" class="control-label"></label>
+        <input asp-for="Class" class="form-control" />
+        <span asp-validation-for="Class" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Instrument" class="control-label"></label>
+        <select asp-for="Instrument" class="form-control" asp-items="Html.GetEnumSelectList<Instrument>()"></select>
+        <span asp-validation-for="Instrument" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="TeacherId" class="control-label"></label>
+        <select asp-for="TeacherId" class="form-control" asp-items="Model.Teachers">
+            <option value="">-- Select teacher --</option>
+        </select>
+        <span asp-validation-for="TeacherId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-link">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

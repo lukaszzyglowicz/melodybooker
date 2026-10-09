@@ -1,0 +1,49 @@
+@using melody.Models.ViewModels
+@model List<StudentListItemViewModel>
+@{
+    ViewData["Title"] = "Students";
+}
+
+<h1>Students</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Add student</a>
+</p>
+
+@if (!Model.Any())
+{
+    <p>No students yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.First().FullName)</th>
+                <th>@Html.DisplayNameFor(m => m.First().Class)</th>
+                <th>Instrument</th>
+                <th>@Html.DisplayNameFor(m => m.First().TeacherFullName)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.FullName</td>
+                    <td>@student.Class</td>
+                    <td>@student.Instrument</td>
+                    <td>@student.TeacherFullName</td>
+                    <td>
+                        <a class="btn btn-sm btn-secondary" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@student.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<p>
+    <a asp-controller="Admin" asp-action="Index">Back to dashboard</a>
+</p>

@@ -1,0 +1,52 @@
+@using melody.Models.ViewModels
+@using melody.Models.Domain
+@model StudentFormViewModel
+@{
+    ViewData["Title"] = "Add student";
+    var hasTeachers = Model.Teachers.Any();
+}
+
+<h1>Add student</h1>
+
+@if (!hasTeachers)
+{
+    <div class="alert alert-warning">
+        <p>You need to add a teacher before you can create a student.</p>
+        <a class="btn btn-primary" asp-controller="AdminTeachers" asp-action="Create">Add teacher</a>
+    </div>
+}
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Create" method="post">
+    <fieldset disabled="@(!hasTeachers)">
+        <div class="form-group mb-3">
+            <label asp-for="FullName" class="control-label"></label>
+            <input asp-for="FullName" class="form-control" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Class" class="control-label"></label>
+            <input asp-for="Class" class="form-control" />
+            <span asp-validation-for="Class" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Instrument" class="control-label"></label>
+            <select asp-for="Instrument" class="form-control" asp-items="Html.GetEnumSelectList<Instrument>()"></select>
+            <span asp-validation-for="Instrument" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="TeacherId" class="control-label"></label>
+            <select asp-for="TeacherId" class="form-control" asp-items="Model.Teachers">
+                <option value="">-- Select teacher --</option>
+            </select>
+            <span asp-validation-for="TeacherId" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </fieldset>
+    <a asp-action="Index" class="btn btn-link">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
