@@ -367,16 +367,16 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 
 #### Automated
 
-- [x] 4.1 Solution builds: `dotnet build melodybooker.sln`
+- [x] 4.1 Solution builds: `dotnet build melodybooker.sln` — 18a6381
 - [ ] 4.2 Integration test: Administrator `GET /Admin` → 200, `GET /Teacher` → 403 (awaits Phase 5 test project)
 - [ ] 4.3 Integration test: Teacher `GET /Teacher` → 200, `GET /Admin` → 403 (awaits Phase 5 test project)
 - [ ] 4.4 Integration test: login redirects each role to its own controller (awaits Phase 5 test project)
 
 #### Manual
 
-- [ ] 4.5 Administrator login lands on `/Admin` placeholder page
-- [ ] 4.6 Teacher login lands on `/Teacher` placeholder page
-- [ ] 4.7 Each role gets Access Denied on the other role's URL
+- [x] 4.5 Administrator login lands on `/Admin` placeholder page
+- [ ] 4.6 Teacher login lands on `/Teacher` placeholder page (awaits S-01 teacher account creation; no way to create a Teacher user yet)
+- [ ] 4.7 Each role gets Access Denied on the other role's URL (awaits S-01 teacher account creation; no way to create a Teacher user yet)
 
 ### Phase 5: Automated verification
 
