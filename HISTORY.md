@@ -279,6 +279,107 @@ odznaczenie wierszy zależnych od testów we wszystkich fazach).
 
 ---
 
+### Ciąg dalszy Fazy 6 — domknięcie planu (2026-10-09)
+
+**Faza 4 — domknięcie manualne:** utworzono testowe konto Teacher ręcznie
+przez `UserManager` (zgodnie z planem — tworzenie nauczycieli to zakres
+S-01, poza tą zmianą); potwierdzono wiersze 4.5-4.7 (przekierowanie na
+`/Teacher`, 403 na `/Admin`). Commit (ręczny użytkownika) `dae7339`
+„Phase 4 manual verification follow-up”.
+
+**Faza 5 — Automated verification** (delegowana do subagenta):
+- Nowy projekt `tests/melody.Tests` (xUnit + `WebApplicationFactory<Program>`),
+  zarejestrowany w `melodybooker.sln`.
+- `MelodyWebApplicationFactory.cs` — podmiana `ApplicationDbContext` na
+  SQLite in-memory; odkryto po drodze, że migracje (surowy SQL pod SQL
+  Server) nie działają na SQLite — dodano w `Program.cs` gałąź
+  `if (Environment.IsEnvironment("Testing")) EnsureCreatedAsync() else
+  MigrateAsync()`.
+- `AuthorizationTests.cs` (7 testów) + `AdminUserSeederTests.cs` — pokrycie
+  anonimowych/błędnych/poprawnych ról dla `/`, `/Identity/Account/Register`,
+  `/Admin`, `/Teacher`, oraz idempotencji seedera.
+- Gate build: PASS, 7/7 testów PASS. Commit (ręczny) `b4513d3` „Phase 5 adds
+  the integration/unit test project backing authorization”. SHA dopisany
+  retrospektywnie do wszystkich wcześniej odłożonych wierszy 1.2, 2.2, 2.3,
+  3.2, 3.3, 4.2, 4.3.
+
+**Odkryta luka w rytuale:** wiersz 4.4 („login redirects each role to its
+own controller”) nie miał żadnego testu — realna luka, nie odłożony wiersz.
+Dopisano `Administrator_RootRedirectsToAdminController` i
+`Teacher_RootRedirectsToTeacherController`, zweryfikowano build + 9/9 testów
++ celową próbę złamania (usunięcie logiki przekierowania w
+`HomeController.cs` → testy czerwone → przywrócono). Commit `f5c58a5`
+„test(...): cover role-based post-login redirect (4.4 gap fix)”, SHA
+dopisany w `15d9998`.
+
+**Incydent produkcyjny (równolegle, poza planem):** zgłoszenie użytkownika
+"nie działa mi hasło" na Azure. Diagnoza: tabela `AspNetUsers` na Azure SQL
+była **całkowicie pusta** — nie błąd hasła, tylko brak konta admina w ogóle.
+Przyczyna: Managed Identity nie działa z poziomu procesu Kudu (inny kontekst
+kontenera niż właściwy proces aplikacji). Obejście: tymczasowe wyłączenie
+`ad-only-auth`, reset hasła SQL-admina, zbudowanie i wgranie przez Kudu VFS
+małego narzędzia diagnostycznego (`azdiag`), ręczne `INSERT` konta
+`luka103@gmail.com` z poprawnym hashem hasła Identity i rolą Administrator
+(po drodze odkryto, że `ApplicationUser.DisplayName` jest `NOT NULL` i musi
+być jawnie podane w surowym INSERT-cie). Posprzątano: usunięto `azdiag` z
+kontenera, przywrócono `ad-only-auth`. Zweryfikowano logowanie (symulowany
+POST → 302). Lokalne konto admina (LocalDB) potwierdzone działające
+niezależnie.
+
+**Epilog planu:** po potwierdzeniu przez użytkownika, że wiersze 3.6/4.6/4.7
+(wymagające konta Teacher spoza zakresu) są świadomie odłożone do S-01,
+`change.md` → `status: implemented`. Commit `f72bb2f` „chore(...): close out
+plan (epilogue)”. Roadmap (`F-01` → `in-progress`) celowo pozostawiony
+nietknięty — flip na `done` to zadanie `/10x-archive`, nie `/10x-implement`.
+
+## Faza 7 — `/10x-plan-review role-based-authorization` (2026-10-09)
+
+| # | Skill / komenda | Wynik |
+|---|---|---|
+| 20 | `/10x-plan-review role-based-authorization` | Przegląd już zaimplementowanego planu — 2 krytyczne + 3 ostrzeżenia + 1 obserwacja, werdykt **REVISE** |
+
+**Kluczowe odkrycie:** weryfikacja na żywo (Kudu VFS, `curl`) ujawniła, że
+Azure dev od **5 października** serwowało kod **sprzed** całej tej zmiany
+(pierwszy commit F-01 to 7 października) — anonimowy `GET /` zwracał 200 ze
+starym, niechronionym szablonem zamiast przekierowania na login. Wszystkie
+„manualne weryfikacje” na Azure w Fazach 3-4 faktycznie testowały stary kod.
+
+**Znaleziska i naprawy (triage, wszystkie zaakceptowane):**
+- **F1 (CRITICAL)** — Azure miał martwy kod → wdrożono aktualny `main` przez
+  `az webapp deploy` (zip). Po drodze dwie nieudane próby: `Compress-Archive`
+  i `ZipFile.CreateFromDirectory` zapisują wpisy zip z `\` zamiast `/`, co
+  Kudu/rsync na Linuksie odrzuca (`rsync error: Invalid argument (22)`,
+  Kudu status 400) — naprawione przez ręczne budowanie archiwum
+  (`ZipArchive.CreateEntry` z jawnie znormalizowanymi ścieżkami). Po
+  wdrożeniu: `GET /` → 302 do loginu (potwierdzone).
+- **F2 (CRITICAL)** — `FallbackPolicy` blokował też `/health` (brak
+  `.AllowAnonymous()`); zmaterializowało się natychmiast po wdrożeniu F1
+  (`/health` → 302). Naprawione w `Program.cs`. Commit `d39a642`.
+- **F3 (WARNING)** — kontrakt testów Fazy 5 w `plan.md` nigdy nie wymieniał
+  testu przekierowania obiecanego w Fazie 4 (realnie spowodowało lukę 4.4
+  powyżej). Dopisano do planu.
+- **F4 (WARNING)** — `AdminUserSeeder` połykał błędy `CreateAsync` bez logu
+  (utrudniło diagnozę incydentu powyżej) → dodano `logger.LogError(...)`.
+- **F5 (WARNING)** — plan nie przewidział, że testy z surowymi migracjami
+  SQL wymuszą gałąź środowiskową w produkcyjnym `Program.cs` → dopisana
+  notatka w planie na przyszłość.
+- **F6 (OBSERVATION)** — `DisplayName` seedowanego admina był zawsze pusty →
+  ustawiono `"Administrator"`.
+
+Wszystkie poprawki: build PASS, testy PASS (2/2 `AdminUserSeederTests`).
+Commity (ręczne użytkownika): `d39a642` (F2), `9343f76` (F3+F5 w `plan.md`,
+F4+F6 w `AdminUserSeeder.cs`). Werdykt po poprawkach: **REVISE → SOUND**.
+
+**Status na koniec:** plan `role-based-authorization` (F-01) w pełni
+zaimplementowany, przejrzany i naprawiony; kod faktycznie działa zarówno
+lokalnie, jak i na Azure dev. Następny logiczny krok wg roadmapy:
+`/10x-plan` dla kolejnego odblokowanego elementu (np. S-01
+admin-roster-management, po potwierdzeniu konta Teacher dla 3.6/4.6/4.7, lub
+F-02 deployment-skeleton żeby zautomatyzować to, co dziś robiliśmy ręcznie
+przez zip-deploy).
+
+---
+
 *Ten plik należy aktualizować po każdej większej fazie pracy (nowy skill,
 nowa faza wdrożenia), żeby zachować czytelną historię decyzji i wykonanych
 kroków.*
