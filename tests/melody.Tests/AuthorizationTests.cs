@@ -74,4 +74,26 @@ public class AuthorizationTests : IClassFixture<MelodyWebApplicationFactory>, IA
         var adminResponse = await client.GetAsync("/Admin");
         Assert.Equal(HttpStatusCode.Forbidden, adminResponse.StatusCode);
     }
+
+    [Fact]
+    public async Task Administrator_RootRedirectsToAdminController()
+    {
+        var client = _factory.CreateClientAs("Administrator");
+
+        var response = await client.GetAsync("/");
+
+        Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
+        Assert.EndsWith("/Admin", response.Headers.Location?.ToString());
+    }
+
+    [Fact]
+    public async Task Teacher_RootRedirectsToTeacherController()
+    {
+        var client = _factory.CreateClientAs("Teacher");
+
+        var response = await client.GetAsync("/");
+
+        Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
+        Assert.EndsWith("/Teacher", response.Headers.Location?.ToString());
+    }
 }

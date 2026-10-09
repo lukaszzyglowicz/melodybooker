@@ -330,7 +330,7 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 #### Automated
 
 - [x] 1.1 Solution builds: `dotnet build melodybooker.sln` — 8f3ac3a
-- [ ] 1.2 Integration test: anonymous `GET /` redirects to login path (awaits Phase 5 test project)
+- [x] 1.2 Integration test: anonymous `GET /` redirects to login path — b4513d3
 
 #### Manual
 
@@ -342,8 +342,8 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 #### Automated
 
 - [x] 2.1 Solution builds: `dotnet build melodybooker.sln` — 00f03f4
-- [ ] 2.2 Unit test: `AdminUserSeeder.SeedAsync` called twice yields exactly one Administrator user (awaits Phase 5 test project)
-- [ ] 2.3 Unit test: `AdminUserSeeder.SeedAsync` does not throw when `Admin:Email`/`Admin:Password` are unset (awaits Phase 5 test project)
+- [x] 2.2 Unit test: `AdminUserSeeder.SeedAsync` called twice yields exactly one Administrator user — b4513d3
+- [x] 2.3 Unit test: `AdminUserSeeder.SeedAsync` does not throw when `Admin:Email`/`Admin:Password` are unset — b4513d3
 
 #### Manual
 
@@ -354,8 +354,8 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 #### Automated
 
 - [x] 3.1 Solution builds: `dotnet build melodybooker.sln` — 81d9859
-- [ ] 3.2 Integration test: anonymous `GET /Identity/Account/Register` does not return 200 (awaits Phase 5 test project)
-- [ ] 3.3 Integration test: Teacher-role `GET /Identity/Account/Register` returns 403 (awaits Phase 5 test project)
+- [x] 3.2 Integration test: anonymous `GET /Identity/Account/Register` does not return 200 — b4513d3
+- [x] 3.3 Integration test: Teacher-role `GET /Identity/Account/Register` returns 403 — b4513d3
 
 #### Manual
 
@@ -368,9 +368,9 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 #### Automated
 
 - [x] 4.1 Solution builds: `dotnet build melodybooker.sln` — 18a6381
-- [ ] 4.2 Integration test: Administrator `GET /Admin` → 200, `GET /Teacher` → 403 (awaits Phase 5 test project)
-- [ ] 4.3 Integration test: Teacher `GET /Teacher` → 200, `GET /Admin` → 403 (awaits Phase 5 test project)
-- [ ] 4.4 Integration test: login redirects each role to its own controller (awaits Phase 5 test project)
+- [x] 4.2 Integration test: Administrator `GET /Admin` → 200, `GET /Teacher` → 403 — b4513d3
+- [x] 4.3 Integration test: Teacher `GET /Teacher` → 200, `GET /Admin` → 403 — b4513d3
+- [x] 4.4 Integration test: login redirects each role to its own controller
 
 #### Manual
 
@@ -382,10 +382,10 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 
 #### Automated
 
-- [x] 5.1 `dotnet test` passes with all new tests green
-- [x] 5.2 `dotnet build melodybooker.sln` succeeds with the new test project registered
+- [x] 5.1 `dotnet test` passes with all new tests green — b4513d3
+- [x] 5.2 `dotnet build melodybooker.sln` succeeds with the new test project registered — b4513d3
 
 #### Manual
 
-- [x] 5.3 `dotnet test --filter FullyQualifiedName~AuthorizationTests` runs in isolation and passes
-- [x] 5.4 `dotnet test --filter FullyQualifiedName~AdminUserSeederTests` runs in isolation and passes
+- [x] 5.3 `dotnet test --filter FullyQualifiedName~AuthorizationTests` runs in isolation and passes — b4513d3
+- [x] 5.4 `dotnet test --filter FullyQualifiedName~AdminUserSeederTests` runs in isolation and passes — b4513d3
