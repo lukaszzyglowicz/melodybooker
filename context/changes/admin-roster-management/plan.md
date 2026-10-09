@@ -435,16 +435,16 @@ None — `Teacher` and `Student` tables and their FKs already exist from the
 
 #### Automated
 
-- [x] 1.1 Solution builds: `dotnet build melodybooker.sln`
-- [x] 1.2 Existing tests still pass: `dotnet test`
+- [x] 1.1 Solution builds: `dotnet build melodybooker.sln` — 7cbb029
+- [x] 1.2 Existing tests still pass: `dotnet test` — 7cbb029
 
 #### Manual
 
-- [x] 1.3 Administrator can create a teacher with a working login
-- [x] 1.4 Duplicate email shows a clear error, no partial account created
-- [x] 1.5 Editing a teacher's name updates the teacher list
-- [x] 1.6 Deleting a teacher with no students succeeds; with students is blocked with a message
-- [x] 1.7 `/Identity/Account/Register` redirects to the new teacher-create form for Administrator
+- [x] 1.3 Administrator can create a teacher with a working login — 7cbb029
+- [x] 1.4 Duplicate email shows a clear error, no partial account created — 7cbb029
+- [x] 1.5 Editing a teacher's name updates the teacher list — 7cbb029
+- [x] 1.6 Deleting a teacher with no students succeeds; with students is blocked with a message — 7cbb029
+- [x] 1.7 `/Identity/Account/Register` redirects to the new teacher-create form for Administrator — 7cbb029
 
 ### Phase 2: Student roster management
 
