@@ -474,6 +474,6 @@ None — `Teacher` and `Student` tables and their FKs already exist from the
 
 #### Automated
 
-- [ ] 4.1 New tests pass: `dotnet test --filter FullyQualifiedName~AdminRosterAuthorizationTests`
-- [ ] 4.2 New tests pass: `dotnet test --filter FullyQualifiedName~AdminRosterDeletionTests`
-- [ ] 4.3 Full suite passes: `dotnet test`
+- [x] 4.1 New tests pass: `dotnet test --filter FullyQualifiedName~AdminRosterAuthorizationTests`
+- [x] 4.2 New tests pass: `dotnet test --filter FullyQualifiedName~AdminRosterDeletionTests`
+- [x] 4.3 Full suite passes: `dotnet test`
