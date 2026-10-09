@@ -464,11 +464,11 @@ None — `Teacher` and `Student` tables and their FKs already exist from the
 
 #### Automated
 
-- [ ] 3.1 Solution builds: `dotnet build melodybooker.sln`
+- [x] 3.1 Solution builds: `dotnet build melodybooker.sln`
 
 #### Manual
 
-- [ ] 3.2 `/Admin` shows working links to both teacher and student lists
+- [x] 3.2 `/Admin` shows working links to both teacher and student lists
 
 ### Phase 4: Automated verification
 
