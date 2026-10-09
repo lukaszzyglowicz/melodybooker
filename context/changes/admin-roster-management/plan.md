@@ -450,15 +450,15 @@ None — `Teacher` and `Student` tables and their FKs already exist from the
 
 #### Automated
 
-- [x] 2.1 Solution builds: `dotnet build melodybooker.sln`
-- [x] 2.2 Existing tests still pass: `dotnet test`
+- [x] 2.1 Solution builds: `dotnet build melodybooker.sln` — 6135901
+- [x] 2.2 Existing tests still pass: `dotnet test` — 6135901
 
 #### Manual
 
-- [x] 2.3 Add-student form shows disabled/hint state with zero teachers
-- [x] 2.4 Administrator can create a student assigned to a specific teacher
-- [x] 2.5 Editing a student can reassign them to a different teacher
-- [x] 2.6 Deleting a student with no reservations succeeds; with reservations is blocked with a message
+- [x] 2.3 Add-student form shows disabled/hint state with zero teachers — 6135901
+- [x] 2.4 Administrator can create a student assigned to a specific teacher — 6135901
+- [x] 2.5 Editing a student can reassign them to a different teacher — 6135901
+- [x] 2.6 Deleting a student with no reservations succeeds; with reservations is blocked with a message — 6135901
 
 ### Phase 3: Admin dashboard navigation
 
