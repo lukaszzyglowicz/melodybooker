@@ -203,6 +203,82 @@ manualne użytkownika i rytuał commitu. Pozostają Fazy 3-5.
 
 ---
 
+### Ciąg dalszy Fazy 6 (kontynuacja, 2026-10-08)
+
+**Faza 2 — domknięcie:** użytkownik potwierdził weryfikację manualną (2.4);
+commit ręczny `00f03f4` „History md” (objął też HISTORY.md/executions.txt,
+wbrew wcześniejszej decyzji „continue_planned” — zaakceptowane jako
+legitymny scope creep, bo treść należała do tej samej pracy). SHA dopisany
+do wierszy 2.1/2.4.
+
+**Faza 3 — Lock down public self-registration** (delegowana do subagenta):
+- Zainstalowano globalne narzędzie `dotnet-aspnet-codegenerator` (v10.0.2).
+- Dodano pakiet `Microsoft.VisualStudio.Web.CodeGeneration.Design` do
+  `melody.csproj` (z `IncludeAssets` zawierającym `compile` — adaptacja,
+  bez tego narzędzie scaffoldujące nie znajdowało assemblies).
+- Wyscaffoldowano `Areas/Identity/Pages/Account/Register.cshtml(.cs)` i
+  towarzyszące pliki `_ViewImports`/`_ViewStart`/`_ValidationScriptsPartial`;
+  dodano `[Authorize(Roles = "Administrator")]` na `RegisterModel` (subagent
+  odkrył, że wyscaffoldowana strona nie niesie już `[AllowAnonymous]` z RCL —
+  potwierdza wcześniejszy research).
+- `_LoginPartial.cshtml` — link "Register" przeniesiony do gałęzi
+  zalogowanego Administratora.
+- Subagent przypadkowo wstrzyknął duplikat `AddDefaultIdentity<...>()` do
+  `Program.cs` przez sam scaffolder — wykryty i cofnięty jako poza zakresem
+  fazy.
+- Gate build: PASS. Commit (ręczny użytkownika) `81d9859` „Phase 3 Complete -
+  Ready for Manual Verification” — zawierał poprawny zestaw plików Fazy 3
+  (bez niepowiązanych ścieżek tym razem).
+
+**Odkryta przedistniejąca usterka blokująca testy lokalne:** aplikacja nie
+startowała lokalnie w ogóle — `AddApplicationInsightsTelemetry()` (z Fazy 0
+deploymentu) rzucał wyjątek bez skonfigurowanego connection stringa (w
+Azure dostarczanego automatycznie, lokalnie brak). Dodatkowo projekt nigdy
+nie miał zainicjowanego `dotnet user-secrets` (`UserSecretsId`), więc
+`Admin:Email`/`Admin:Password` z Fazy 2 nigdy nie były faktycznie ustawione
+lokalnie — co podważa wcześniejsze potwierdzenie manualne 2.4 (prawdopodobnie
+zweryfikowane inaczej niż przez `dotnet run` lokalnie).
+
+Naprawy (poza zakresem planu, zaakceptowane przez użytkownika):
+- `Program.cs`: `AddApplicationInsightsTelemetry()` wywoływane warunkowo,
+  tylko gdy skonfigurowany jest connection string.
+- `dotnet user-secrets init` w `src/melody/` + ustawienie
+  `Admin:Email`=`luka103@gmail.com`, `Admin:Password`=`Admin123!!!` (dane
+  testowe, nie committed — tylko `UserSecretsId` w `melody.csproj` trafia do
+  repo).
+- Przypadkowa zmiana portu w `launchSettings.json` (efekt uboczny `dotnet
+  run`) — wykryta i cofnięta przed commitem.
+- Aplikacja uruchomiona lokalnie (`http://localhost:5179`), administrator
+  zasiany poprawnie przy starcie.
+- Manualna weryfikacja 3.4/3.5 potwierdzona przez użytkownika (tylko "Login"
+  widoczny wylogowany; "Register" widoczny i działający dla admina). Wiersz
+  3.6 (konto Teacher) odłożony — nie istnieje jeszcze mechanizm tworzenia
+  nauczycieli (to S-01, osobny element roadmapy, nie Faza 5 tego planu).
+- Commit (ręczny użytkownika) `399aa58` „fix(...): unblock local manual
+  verification (p3 follow-up)” — czysty, dokładnie zaplanowany zestaw plików.
+  SHA dopisany: 3.1→`81d9859`, 3.4/3.5→`399aa58`.
+
+**Faza 4 — Role-scoped landing stubs** (delegowana do subagenta):
+- Nowe: `Controllers/AdminController.cs` (`[Authorize(Roles =
+  "Administrator")]`, `/Admin`), `Controllers/TeacherController.cs`
+  (`[Authorize(Roles = "Teacher")]`, `/Teacher`), odpowiadające im widoki
+  placeholder `Views/Admin/Index.cshtml`, `Views/Teacher/Index.cshtml`.
+- `HomeController.Index()` — dodano przekierowanie po roli
+  (Administrator→`/Admin`, Teacher→`/Teacher`, inaczej zwykły widok).
+- Gate build: pierwsza próba FAIL (zablokowany `melody.exe` przez
+  wcześniejszy proces `dotnet run` z weryfikacji Fazy 3) → zatrzymano proces,
+  druga próba PASS (2/2).
+- Wiersz 4.1 odznaczony; 4.2-4.4 odłożone do Fazy 5; w toku: oczekiwanie na
+  weryfikację manualną 4.5-4.7 (4.6/4.7 również zablokowane brakiem konta
+  Teacher, jak w Fazie 3).
+
+**Status na koniec tego wpisu:** Fazy 1-3 w pełni domknięte i
+scommitowane; Faza 4 zaimplementowana i zbudowana, czeka na weryfikację
+manualną i rytuał commitu. Pozostaje Faza 5 (projekt testowy + retrospektywne
+odznaczenie wierszy zależnych od testów we wszystkich fazach).
+
+---
+
 *Ten plik należy aktualizować po każdej większej fazie pracy (nowy skill,
 nowa faza wdrożenia), żeby zachować czytelną historię decyzji i wykonanych
 kroków.*
