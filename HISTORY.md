@@ -378,6 +378,67 @@ admin-roster-management, po potwierdzeniu konta Teacher dla 3.6/4.6/4.7, lub
 F-02 deployment-skeleton żeby zautomatyzować to, co dziś robiliśmy ręcznie
 przez zip-deploy).
 
+## Faza 8 — `/10x-plan` + implementacja `admin-roster-management` (S-01) (2026-10-09)
+
+| # | Skill / komenda | Wynik |
+|---|---|---|
+| 21 | `/10x-plan admin-roster-management` | `context/changes/admin-roster-management/{change.md,plan-brief.md,plan.md}` — plan w 4 fazach dla S-01: zarządzanie rosterem przez Administratora |
+
+**Kluczowe decyzje z plan-brief:** hasło nauczyciela wpisywane bezpośrednio
+przez admina (brak infrastruktury e-mail/SMS, wzorowane na
+`AdminUserSeeder`); usuwanie nauczyciela/ucznia z aktywnymi
+przypisaniami/rezerwacjami jest **blokowane** z czytelnym komunikatem (baza
+już to wymusza przez `Restrict` FK — Faza 1 tylko to ładnie obsługuje);
+edycja nauczyciela ogranicza się do imienia (bez zmiany hasła/e-maila);
+zarządzanie salami poza zakresem; legacy strona
+`/Identity/Account/Register` wyłączona (niebezpiecznie logowała admina na
+nowo utworzone konto i nie tworzyła profilu `Teacher`).
+
+**Implementacja (4 fazy, bez odrębnego logu w tym pliku per-faza):**
+- Faza 1 — `AdminTeachersController` + widoki (create/edit/delete
+  nauczycieli z prawdziwym kontem Identity, kompensujące usunięcie konta
+  przy błędzie zapisu wiersza `Teacher`). Commit `7cbb029`.
+- Faza 2 — `AdminStudentsController` + widoki (create/edit/delete uczniów,
+  przypisanie/zmiana nauczyciela, degradacja formularza przy zerowej
+  liczbie nauczycieli). Commit `6135901`.
+- Faza 3 — nawigacja `/Admin` (zastąpienie placeholdera "coming soon"
+  działającymi linkami). Commit `3368dd3`.
+- Faza 4 — testy integracyjne: autoryzacja (`AdminRosterAuthorizationTests`)
+  i reguły blokady usuwania z FR-006 (`AdminRosterDeletionTests`). Commit
+  `299babb`.
+- Gate build: PASS, pełny `dotnet test`: PASS (wszystkie 15 wierszy Progress
+  oznaczone `[x]` z SHA).
+- Epilog: `change.md` → `status: implemented`. Commit `fed7c43` „chore(...):
+  close out plan (epilogue)". Roadmap (`S-01` → `done`) celowo pozostawiony
+  dla `/10x-archive`.
+
+## Faza 9 — `/10x-archive admin-roster-management` (2026-10-09)
+
+| # | Skill / komenda | Wynik |
+|---|---|---|
+| 22 | `/10x-archive admin-roster-management` | Folder przeniesiony `context/changes/admin-roster-management/` → `context/archive/2026-10-09-admin-roster-management/`; roadmap `S-01` zamknięty |
+
+**Ostrzeżenia (warn-only, zaakceptowane przez użytkownika — "continue"):**
+brak katalogu `reviews/` → brak pokrycia impl-review dla faz 1–4 (nigdy nie
+uruchomiono `/10x-impl-review` dla tego planu). Status `implemented` ✅,
+wszystkie 15 wierszy Progress ukończone z poprawnym SHA (7+ znaków,
+rozwiązują się, są przodkami bieżącego HEAD) ✅ — bez repointingu, bo brak
+dowodu przepisania historii (SHA nie są przodkami `origin/main`, ale to
+repo nie korzysta z PR/CI — lokalny workflow lekcyjny z gałęziami
+`m1l1..m2l2`, nie świadczy to o squashu).
+
+**Przebieg:** `change.md` stemplowany (`status: archived`,
+`archived_at: 2026-10-09T21:54:55Z`) i przeniesiony przez `git mv`
+(skomitowane ręcznie przez użytkownika jako `91a18a7`, przy okazji dociągając
+nieśledzone wcześniej pliki skilla `10x-archive`). Roadmap: `S-01` →
+`Status: done` (tabela „At a glance" + sekcja body), wpis dodany do
+`## Done`. Commit `ef15a68` „chore(archive): close admin-roster-management".
+
+**Status na koniec:** `admin-roster-management` (S-01) w pełni
+zaimplementowany i zarchiwizowany. Następny logiczny krok wg roadmapy:
+`/10x-plan teacher-student-list` (S-02, odblokowany przez F-01 + S-01) albo
+`/10x-plan teacher-books-room` (S-03, "north star" projektu).
+
 ---
 
 *Ten plik należy aktualizować po każdej większej fazie pracy (nowy skill,
