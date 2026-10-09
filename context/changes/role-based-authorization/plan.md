@@ -374,7 +374,7 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 
 #### Manual
 
-- [x] 4.5 Administrator login lands on `/Admin` placeholder page
+- [x] 4.5 Administrator login lands on `/Admin` placeholder page — dae7339
 - [ ] 4.6 Teacher login lands on `/Teacher` placeholder page (awaits S-01 teacher account creation; no way to create a Teacher user yet)
 - [ ] 4.7 Each role gets Access Denied on the other role's URL (awaits S-01 teacher account creation; no way to create a Teacher user yet)
 
@@ -382,10 +382,10 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 
 #### Automated
 
-- [ ] 5.1 `dotnet test` passes with all new tests green
-- [ ] 5.2 `dotnet build melodybooker.sln` succeeds with the new test project registered
+- [x] 5.1 `dotnet test` passes with all new tests green
+- [x] 5.2 `dotnet build melodybooker.sln` succeeds with the new test project registered
 
 #### Manual
 
-- [ ] 5.3 `dotnet test --filter FullyQualifiedName~AuthorizationTests` runs in isolation and passes
-- [ ] 5.4 `dotnet test --filter FullyQualifiedName~AdminUserSeederTests` runs in isolation and passes
+- [x] 5.3 `dotnet test --filter FullyQualifiedName~AuthorizationTests` runs in isolation and passes
+- [x] 5.4 `dotnet test --filter FullyQualifiedName~AdminUserSeederTests` runs in isolation and passes

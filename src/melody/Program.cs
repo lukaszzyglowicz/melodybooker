@@ -79,10 +79,26 @@ using (var scope = app.Services.CreateScope())
     // Phase 0: no CI/CD migration step exists yet, so the app applies pending
     // EF Core migrations itself at startup using its own managed identity.
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    await db.Database.MigrateAsync();
+    if (app.Environment.IsEnvironment("Testing"))
+    {
+        // Migrations are raw SQL authored against the real (SQL Server) provider, so
+        // they can't run against the SQLite in-memory database WebApplicationFactory-based
+        // tests substitute in. EnsureCreatedAsync builds the schema straight from the model
+        // instead, which is provider-agnostic and sufficient for a throwaway test database.
+        await db.Database.EnsureCreatedAsync();
+    }
+    else
+    {
+        await db.Database.MigrateAsync();
+    }
 
     await RoleSeeder.SeedAsync(scope.ServiceProvider);
     await AdminUserSeeder.SeedAsync(scope.ServiceProvider, app.Configuration);
 }
 
 app.Run();
+
+// WebApplicationFactory<Program> (used by the integration test project) needs a public
+// Program type to resolve the entry point assembly; top-level statements make the
+// implicit Program class internal by default, so this makes it visible across assemblies.
+public partial class Program { }
