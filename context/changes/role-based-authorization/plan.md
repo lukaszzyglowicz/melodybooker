@@ -370,7 +370,7 @@ No EF Core schema changes in this plan — `ApplicationUser`/`IdentityRole` tabl
 - [x] 4.1 Solution builds: `dotnet build melodybooker.sln` — 18a6381
 - [x] 4.2 Integration test: Administrator `GET /Admin` → 200, `GET /Teacher` → 403 — b4513d3
 - [x] 4.3 Integration test: Teacher `GET /Teacher` → 200, `GET /Admin` → 403 — b4513d3
-- [x] 4.4 Integration test: login redirects each role to its own controller
+- [x] 4.4 Integration test: login redirects each role to its own controller — f5c58a5
 
 #### Manual
 
