@@ -251,13 +251,15 @@ Add the test project the repo doesn't have yet, covering the authorization behav
 
 **Contract**: `public class MelodyWebApplicationFactory : WebApplicationFactory<Program>` overriding `ConfigureWebHost` to replace `ApplicationDbContext`'s `DbContextOptions` with the EF Core SQLite in-memory or `UseInMemoryDatabase` provider, and to ensure roles + one Administrator + one Teacher test user exist via the existing seeders before tests run. Expose an `HttpClient` factory helper that authenticates as a given role (e.g., via a test-only authentication handler, since standing up real cookie-based login per test is heavier than needed here).
 
+**Known gotcha** (confirmed during implementation): this project's migrations are raw SQL authored against the real SQL Server provider, so they can't run against the SQLite in-memory/`UseInMemoryDatabase` substitute. `WebApplicationFactory<Program>` + raw-SQL EF migrations commonly requires an environment-aware branch in the app's own startup (`Program.cs`) — e.g. `if (app.Environment.IsEnvironment("Testing")) await db.Database.EnsureCreatedAsync(); else await db.Database.MigrateAsync();` — rather than something containable entirely inside the test project. Plan for this branch up front instead of discovering it mid-implementation.
+
 #### 3. Authorization integration tests
 
 **File**: `tests/melody.Tests/AuthorizationTests.cs` (new)
 
 **Intent**: Assert the concrete behaviors described in Phases 1, 3, and 4's Success Criteria in one place.
 
-**Contract**: `[Fact]` tests for: anonymous `GET /` → redirect to login path; anonymous `GET /Identity/Account/Register` → not 200; Teacher `GET /Identity/Account/Register` → 403; Administrator `GET /Admin` → 200 and `GET /Teacher` → 403; Teacher `GET /Teacher` → 200 and `GET /Admin` → 403.
+**Contract**: `[Fact]` tests for: anonymous `GET /` → redirect to login path; anonymous `GET /Identity/Account/Register` → not 200; Teacher `GET /Identity/Account/Register` → 403; Administrator `GET /Admin` → 200 and `GET /Teacher` → 403; Teacher `GET /Teacher` → 200 and `GET /Admin` → 403; Administrator `GET /` → redirects to `/Admin` and Teacher `GET /` → redirects to `/Teacher` (the post-login redirect promised by Phase 4's Success Criteria).
 
 #### 4. Admin seeder unit tests
 

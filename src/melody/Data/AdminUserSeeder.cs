@@ -12,12 +12,12 @@ public static class AdminUserSeeder
 {
     public static async Task SeedAsync(IServiceProvider services, IConfiguration config)
     {
+        var logger = services.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(AdminUserSeeder));
         var email = config["Admin:Email"];
         var password = config["Admin:Password"];
 
         if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
         {
-            var logger = services.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(AdminUserSeeder));
             logger.LogWarning(
                 "Admin:Email/Admin:Password are not configured; skipping administrator account seeding. " +
                 "Set them via dotnet user-secrets (local dev) or Admin__Email/Admin__Password app settings (production).");
@@ -36,12 +36,20 @@ public static class AdminUserSeeder
             UserName = email,
             Email = email,
             EmailConfirmed = true,
+            DisplayName = "Administrator",
         };
 
         var result = await userManager.CreateAsync(admin, password);
         if (result.Succeeded)
         {
             await userManager.AddToRoleAsync(admin, "Administrator");
+        }
+        else
+        {
+            logger.LogError(
+                "Failed to create the seeded administrator account for {Email}: {Errors}",
+                email,
+                string.Join("; ", result.Errors.Select(e => e.Description)));
         }
     }
 }
