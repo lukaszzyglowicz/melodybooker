@@ -72,7 +72,7 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.MapRazorPages();
-app.MapHealthChecks("/health");
+app.MapHealthChecks("/health").AllowAnonymous();
 
 using (var scope = app.Services.CreateScope())
 {
