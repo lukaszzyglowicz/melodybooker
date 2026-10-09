@@ -464,16 +464,16 @@ None — `Teacher` and `Student` tables and their FKs already exist from the
 
 #### Automated
 
-- [x] 3.1 Solution builds: `dotnet build melodybooker.sln`
+- [x] 3.1 Solution builds: `dotnet build melodybooker.sln` — 3368dd3
 
 #### Manual
 
-- [x] 3.2 `/Admin` shows working links to both teacher and student lists
+- [x] 3.2 `/Admin` shows working links to both teacher and student lists — 3368dd3
 
 ### Phase 4: Automated verification
 
 #### Automated
 
-- [x] 4.1 New tests pass: `dotnet test --filter FullyQualifiedName~AdminRosterAuthorizationTests`
-- [x] 4.2 New tests pass: `dotnet test --filter FullyQualifiedName~AdminRosterDeletionTests`
-- [x] 4.3 Full suite passes: `dotnet test`
+- [x] 4.1 New tests pass: `dotnet test --filter FullyQualifiedName~AdminRosterAuthorizationTests` — 299babb
+- [x] 4.2 New tests pass: `dotnet test --filter FullyQualifiedName~AdminRosterDeletionTests` — 299babb
+- [x] 4.3 Full suite passes: `dotnet test` — 299babb
