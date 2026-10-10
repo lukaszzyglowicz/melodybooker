@@ -119,15 +119,23 @@ public class MelodyWebApplicationFactory : WebApplicationFactory<Program>
     /// <summary>
     /// Creates an <see cref="HttpClient"/> that authenticates as <paramref name="role"/> via the
     /// <see cref="TestAuthHandler"/> header, or as anonymous when <paramref name="role"/> is null.
-    /// Redirects are not followed automatically so tests can assert on the redirect response itself.
+    /// When <paramref name="userId"/> is supplied, it is sent as the <c>X-Test-UserId</c> header so
+    /// the authenticated principal's <c>NameIdentifier</c> claim matches a specific seeded
+    /// <c>ApplicationUser.Id</c> instead of the default <c>"test-{role}"</c> value. Redirects are
+    /// not followed automatically so tests can assert on the redirect response itself.
     /// </summary>
-    public HttpClient CreateClientAs(string? role)
+    public HttpClient CreateClientAs(string? role, string? userId = null)
     {
         var client = CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
 
         if (role is not null)
         {
             client.DefaultRequestHeaders.Add(TestAuthHandler.RoleHeaderName, role);
+        }
+
+        if (userId is not null)
+        {
+            client.DefaultRequestHeaders.Add(TestAuthHandler.UserIdHeaderName, userId);
         }
 
         return client;

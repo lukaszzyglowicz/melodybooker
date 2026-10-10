@@ -202,19 +202,19 @@ Verify the data-isolation guarantee, the empty-state path, and the existing role
 
 #### Automated
 
-- [x] 2.1 Build succeeds: `dotnet build melodybooker.sln`
+- [x] 2.1 Build succeeds: `dotnet build melodybooker.sln` — 7d9dfa0
 
 #### Manual
 
-- [x] 2.2 Logging in as a Teacher with assigned students shows those students' Name/Class/Instrument in a table
-- [x] 2.3 Logging in as a Teacher with no assigned students shows the friendly empty-state message, not a blank table
+- [x] 2.2 Logging in as a Teacher with assigned students shows those students' Name/Class/Instrument in a table — 7d9dfa0
+- [x] 2.3 Logging in as a Teacher with no assigned students shows the friendly empty-state message, not a blank table — 7d9dfa0
 
 ### Phase 3: Test infrastructure extension
 
 #### Automated
 
-- [ ] 3.1 All existing tests still pass unchanged: `dotnet test --filter FullyQualifiedName~AuthorizationTests`
-- [ ] 3.2 All existing tests still pass unchanged: `dotnet test --filter FullyQualifiedName~AdminRosterAuthorizationTests`
+- [x] 3.1 All existing tests still pass unchanged: `dotnet test --filter FullyQualifiedName~AuthorizationTests`
+- [x] 3.2 All existing tests still pass unchanged: `dotnet test --filter FullyQualifiedName~AdminRosterAuthorizationTests`
 
 ### Phase 4: Integration tests
 

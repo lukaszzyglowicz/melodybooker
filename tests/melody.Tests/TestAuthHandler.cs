@@ -12,12 +12,15 @@ namespace melody.Tests;
 /// <see cref="RoleHeaderName"/> request header and, when present, authenticates the caller with
 /// that role claim; otherwise the request is treated as anonymous. This avoids needing a real
 /// cookie login flow per test while still exercising the same <c>[Authorize]</c>/role-based
-/// authorization pipeline configured in <c>Program.cs</c>.
+/// authorization pipeline configured in <c>Program.cs</c>. When the <see cref="UserIdHeaderName"/>
+/// header is also present, its value is used for the <c>NameIdentifier</c> claim instead of the
+/// default <c>"test-{role}"</c> value, so a test can authenticate as a specific seeded user.
 /// </summary>
 public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
     public const string SchemeName = "Test";
     public const string RoleHeaderName = "X-Test-Role";
+    public const string UserIdHeaderName = "X-Test-UserId";
 
     public TestAuthHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
@@ -36,10 +39,15 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
         }
 
         var role = roleValues.ToString();
+        var defaultUserId = $"test-{role.ToLowerInvariant()}";
+        var userId = Request.Headers.TryGetValue(UserIdHeaderName, out var userIdValues) &&
+            !string.IsNullOrWhiteSpace(userIdValues.ToString())
+                ? userIdValues.ToString()
+                : defaultUserId;
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, $"test-{role.ToLowerInvariant()}"),
-            new Claim(ClaimTypes.Name, $"test-{role.ToLowerInvariant()}"),
+            new Claim(ClaimTypes.NameIdentifier, userId),
+            new Claim(ClaimTypes.Name, defaultUserId),
             new Claim(ClaimTypes.Role, role),
         };
         var identity = new ClaimsIdentity(claims, SchemeName);
