@@ -3,7 +3,7 @@ project: "MelodyBooker"
 version: 1
 status: draft
 created: 2026-10-06
-updated: 2026-10-09
+updated: 2026-10-10
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
@@ -41,7 +41,7 @@ Music teachers currently plan room reservations by hand in Excel, which cannot e
 
 | ID   | Change ID                   | Outcome (user can …)                                                              | Prerequisites | PRD refs                       | Status   |
 | ---- | ---------------------------- | ---------------------------------------------------------------------------------- | -------------- | ------------------------------- | -------- |
-| F-01 | role-based-authorization     | (foundation) Role-scoped login/authorization enforced; admin account seeded        | —              | FR-001, FR-002, Access Control  | in-progress |
+| F-01 | role-based-authorization     | (foundation) Role-scoped login/authorization enforced; admin account seeded        | —              | FR-001, FR-002, Access Control  | done |
 | F-02 | deployment-skeleton          | (foundation) App deploys to Azure App Service via GitHub Actions on merge          | —              | tech-stack.md deployment target | blocked  |
 | S-01 | admin-roster-management      | Administrator adds/edits/removes teachers and students, assigns student→teacher    | F-01           | FR-003, FR-004, FR-005, FR-006  | done |
 | S-02 | teacher-student-list         | Teacher logs in and sees the list of their assigned students                        | F-01, S-01     | FR-007                          | proposed |
@@ -85,7 +85,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Identity and roles are already seeded (baseline), but nothing currently enforces them on a controller and no admin account exists to log in with — leaving this until later would make every downstream slice impossible to verify for its most important guardrail (teachers only see their own students; minors' data stays scoped).
-- **Status:** in-progress
+- **Status:** done
 
 ### F-02: Deployment skeleton (Azure App Service + CI)
 
@@ -204,3 +204,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 ## Done
 
 - **S-01: Administrator can add, edit, and remove teachers and students, and assign each student to exactly one teacher — including safe handling (reassign or block) when a teacher/student with active assignments or reservations is removed.** — Archived 2026-10-09 → `context/archive/2026-10-09-admin-roster-management/`. Lesson: —.
+- **F-01: (foundation) Every controller/area enforces the correct role (`Administrator` vs `Teacher`); an administrator account exists at startup so the first admin can log in without any public sign-up flow (per Access Control, there is none).** — Archived 2026-10-10 → `context/archive/2026-10-07-role-based-authorization/`. Lesson: —.
