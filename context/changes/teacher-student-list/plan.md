@@ -220,5 +220,5 @@ Verify the data-isolation guarantee, the empty-state path, and the existing role
 
 #### Automated
 
-- [x] 4.1 New tests pass: `dotnet test --filter FullyQualifiedName~TeacherStudentListTests`
-- [x] 4.2 Full test suite passes: `dotnet test`
+- [x] 4.1 New tests pass: `dotnet test --filter FullyQualifiedName~TeacherStudentListTests` — d24af94
+- [x] 4.2 Full test suite passes: `dotnet test` — d24af94
