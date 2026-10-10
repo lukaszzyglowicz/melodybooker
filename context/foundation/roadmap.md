@@ -44,7 +44,7 @@ Music teachers currently plan room reservations by hand in Excel, which cannot e
 | F-01 | role-based-authorization     | (foundation) Role-scoped login/authorization enforced; admin account seeded        | —              | FR-001, FR-002, Access Control  | done |
 | F-02 | deployment-skeleton          | (foundation) App deploys to Azure App Service via GitHub Actions on merge          | —              | tech-stack.md deployment target | blocked  |
 | S-01 | admin-roster-management      | Administrator adds/edits/removes teachers and students, assigns student→teacher    | F-01           | FR-003, FR-004, FR-005, FR-006  | done |
-| S-02 | teacher-student-list         | Teacher logs in and sees the list of their assigned students                        | F-01, S-01     | FR-007                          | proposed |
+| S-02 | teacher-student-list         | Teacher logs in and sees the list of their assigned students                        | F-01, S-01     | FR-007                          | in-progress |
 | S-03 | teacher-books-room           | Teacher reserves a room for a student's weekly lesson (auto duration, no double-booking) | F-01, S-02 | FR-008, FR-009, FR-010, US-01   | proposed |
 | S-04 | specialist-instrument-warning| Teacher sees a soft warning before confirming a specialist-room/mismatched-student booking | S-03    | FR-011, US-02                   | proposed |
 | S-05 | admin-reservation-oversight  | Administrator views and edits/cancels any reservation in the system                 | F-01, S-03     | FR-013, FR-014                  | proposed |
@@ -125,7 +125,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Small in scope, but the "only their own students" guardrail checked here is reused directly by S-03's booking screen — getting the scoping query wrong here propagates downstream.
-- **Status:** proposed
+- **Status:** in-progress
 
 ### S-03: Teacher books a room for a weekly lesson
 
