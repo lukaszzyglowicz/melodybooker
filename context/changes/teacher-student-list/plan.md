@@ -213,12 +213,12 @@ Verify the data-isolation guarantee, the empty-state path, and the existing role
 
 #### Automated
 
-- [x] 3.1 All existing tests still pass unchanged: `dotnet test --filter FullyQualifiedName~AuthorizationTests`
-- [x] 3.2 All existing tests still pass unchanged: `dotnet test --filter FullyQualifiedName~AdminRosterAuthorizationTests`
+- [x] 3.1 All existing tests still pass unchanged: `dotnet test --filter FullyQualifiedName~AuthorizationTests` — cc2f956
+- [x] 3.2 All existing tests still pass unchanged: `dotnet test --filter FullyQualifiedName~AdminRosterAuthorizationTests` — cc2f956
 
 ### Phase 4: Integration tests
 
 #### Automated
 
-- [ ] 4.1 New tests pass: `dotnet test --filter FullyQualifiedName~TeacherStudentListTests`
-- [ ] 4.2 Full test suite passes: `dotnet test`
+- [x] 4.1 New tests pass: `dotnet test --filter FullyQualifiedName~TeacherStudentListTests`
+- [x] 4.2 Full test suite passes: `dotnet test`
