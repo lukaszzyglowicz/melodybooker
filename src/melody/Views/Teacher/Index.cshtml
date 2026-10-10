@@ -1,7 +1,36 @@
+@using melody.Models.ViewModels
+@model List<TeacherStudentListItemViewModel>
 @{
-    ViewData["Title"] = "Teacher";
+    ViewData["Title"] = "My Students";
 }
 
 <h1>Teacher</h1>
 
-<p>You are signed in as a Teacher. Your assigned students list is coming soon.</p>
+<p>You are signed in as a Teacher. Here are your assigned students.</p>
+
+@if (!Model.Any())
+{
+    <p>You don't have any assigned students yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.First().FullName)</th>
+                <th>@Html.DisplayNameFor(m => m.First().Class)</th>
+                <th>Instrument</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.FullName</td>
+                    <td>@student.Class</td>
+                    <td>@student.Instrument</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

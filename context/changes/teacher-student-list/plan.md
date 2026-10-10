@@ -196,18 +196,18 @@ Verify the data-isolation guarantee, the empty-state path, and the existing role
 
 #### Automated
 
-- [ ] 1.1 Build succeeds: `dotnet build melodybooker.sln`
+- [x] 1.1 Build succeeds: `dotnet build melodybooker.sln` — ae2e05f
 
 ### Phase 2: View update
 
 #### Automated
 
-- [ ] 2.1 Build succeeds: `dotnet build melodybooker.sln`
+- [x] 2.1 Build succeeds: `dotnet build melodybooker.sln`
 
 #### Manual
 
-- [ ] 2.2 Logging in as a Teacher with assigned students shows those students' Name/Class/Instrument in a table
-- [ ] 2.3 Logging in as a Teacher with no assigned students shows the friendly empty-state message, not a blank table
+- [x] 2.2 Logging in as a Teacher with assigned students shows those students' Name/Class/Instrument in a table
+- [x] 2.3 Logging in as a Teacher with no assigned students shows the friendly empty-state message, not a blank table
 
 ### Phase 3: Test infrastructure extension
 
