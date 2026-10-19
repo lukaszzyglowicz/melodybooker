@@ -1,7 +1,7 @@
 ---
 change_id: admin-students-ui-polish
 title: Polish the admin students roster view's UI contract
-status: implementing
+status: implemented
 created: 2026-10-19
 updated: 2026-10-19
 archived_at: null
