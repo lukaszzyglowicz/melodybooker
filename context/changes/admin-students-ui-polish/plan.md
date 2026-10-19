@@ -220,13 +220,13 @@ Not applicable — no data model or schema changes.
 
 #### Automated
 
-- [x] 2.1 `dotnet build melodybooker.sln` succeeds
-- [x] 2.2 `Create.cshtml`/`Edit.cshtml` each reference `FullName` exactly once (inline block removed)
+- [x] 2.1 `dotnet build melodybooker.sln` succeeds (fefd33e)
+- [x] 2.2 `Create.cshtml`/`Edit.cshtml` each reference `FullName` exactly once (inline block removed) (fefd33e)
 
 #### Manual
 
-- [ ] 2.3 Create/Edit pages render identically to before
-- [ ] 2.4 Index row links have distinct per-student accessible names
+- [x] 2.3 Create/Edit pages render identically to before (fefd33e)
+- [x] 2.4 Index row links have distinct per-student accessible names (fefd33e)
 
 ### Phase 3: Verification pass + agent-rules guard
 
