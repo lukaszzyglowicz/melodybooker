@@ -34,4 +34,12 @@ public class Reservation
     /// Recorded for audit/display; it never blocks the reservation (FR-011 soft enforcement).
     /// </summary>
     public bool HadInstrumentMismatchWarning { get; set; }
+
+    /// <summary>
+    /// Half-open interval overlap test for two time ranges (FR-010's double-booking check).
+    /// Equal boundaries (e.g. <paramref name="endA"/> == <paramref name="startB"/>) return
+    /// <c>false</c>: back-to-back reservations in the same room are allowed, not a conflict.
+    /// </summary>
+    public static bool Overlaps(TimeSpan startA, TimeSpan endA, TimeSpan startB, TimeSpan endB) =>
+        startA < endB && startB < endA;
 }

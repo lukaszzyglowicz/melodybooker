@@ -94,6 +94,7 @@ using (var scope = app.Services.CreateScope())
 
     await RoleSeeder.SeedAsync(scope.ServiceProvider);
     await AdminUserSeeder.SeedAsync(scope.ServiceProvider, app.Configuration);
+    await RoomSeeder.SeedAsync(scope.ServiceProvider);
 }
 
 app.Run();
