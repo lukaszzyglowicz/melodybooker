@@ -231,9 +231,9 @@ No new EF Core migration is required — `Rooms`/`Reservations` tables already e
 
 #### Automated
 
-- [x] 1.1 `dotnet build melodybooker.sln` succeeds
-- [x] 1.2 `ReservationOverlapTests` pass (exact match, overlap, back-to-back, disjoint, containment)
-- [x] 1.3 `RoomSeederTests` pass (6 rooms seeded, correct specialist split, idempotent)
+- [x] 1.1 `dotnet build melodybooker.sln` succeeds — d307d94
+- [x] 1.2 `ReservationOverlapTests` pass (exact match, overlap, back-to-back, disjoint, containment) — d307d94
+- [x] 1.3 `RoomSeederTests` pass (6 rooms seeded, correct specialist split, idempotent) — d307d94
 
 ### Phase 2: Teacher booking controller + views
 
