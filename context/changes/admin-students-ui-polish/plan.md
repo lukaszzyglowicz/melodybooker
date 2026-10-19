@@ -220,8 +220,8 @@ Not applicable — no data model or schema changes.
 
 #### Automated
 
-- [ ] 2.1 `dotnet build melodybooker.sln` succeeds
-- [ ] 2.2 `Create.cshtml`/`Edit.cshtml` each reference `FullName` exactly once (inline block removed)
+- [x] 2.1 `dotnet build melodybooker.sln` succeeds
+- [x] 2.2 `Create.cshtml`/`Edit.cshtml` each reference `FullName` exactly once (inline block removed)
 
 #### Manual
 
