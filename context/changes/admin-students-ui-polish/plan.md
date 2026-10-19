@@ -232,11 +232,11 @@ Not applicable — no data model or schema changes.
 
 #### Automated
 
-- [ ] 3.1 Final `dotnet build melodybooker.sln` succeeds
-- [ ] 3.2 Hardcoded-value re-scan on `Views/AdminStudents/*.cshtml` returns 0 matches
+- [x] 3.1 Final `dotnet build melodybooker.sln` succeeds (9488f37)
+- [x] 3.2 Hardcoded-value re-scan on `Views/AdminStudents/*.cshtml` returns 0 matches (9488f37)
 
 #### Manual
 
-- [ ] 3.3 7-state matrix recorded (states shown or N/A with reason)
-- [ ] 3.4 Desktop + mobile screenshots taken, no layout regression
-- [ ] 3.5 `AGENTS.md` UI conventions section reads correctly
+- [x] 3.3 7-state matrix recorded (states shown or N/A with reason) (9488f37)
+- [x] 3.4 Desktop + mobile screenshots taken, no layout regression (9488f37)
+- [x] 3.5 `AGENTS.md` UI conventions section reads correctly (9488f37)

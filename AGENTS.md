@@ -31,6 +31,12 @@ The repo is still at the default `dotnet new mvc` scaffold stage: no auth, EF Co
 
 `Nullable` and `ImplicitUsings` are both enabled in `src/melody/melody.csproj` — write nullable-aware C# and omit `using` statements for BCL namespaces. Controllers follow the stock MVC convention (`XController` in `Controllers/`, matching views under `Views/X/`).
 
+## UI conventions
+
+- Brand color lives in `src/melody/wwwroot/css/site.css`'s `:root` block as `--brand-primary`/`--brand-primary-active` — reference it, don't hardcode hex. (Note: `.cshtml.css` files are CSS-isolation-scoped to that view's own markup only — they never reach content rendered via `@RenderBody()`, so layout-level color overrides belong in the global `site.css`, not `_Layout.cshtml.css`.)
+- Shared form-field partials live alongside their controller's views, e.g. `Views/AdminStudents/_StudentFormFields.cshtml` — check for an existing partial before duplicating a field block across Create/Edit pages.
+- Row-action links (Edit/Delete, etc.) need an `aria-label` identifying the row's subject (e.g. `aria-label="Edit @student.FullName"`) so screen-reader users can distinguish repeated link text across rows.
+
 ## Commits and PRs
 
 No enforced commit convention exists (`git log` shows short, informal, lowercase messages). No CI gate exists yet to satisfy before merging.
