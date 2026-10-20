@@ -67,6 +67,13 @@ public class TeacherReservationsController : Controller
             return await ReRenderCreateAsync(model, student);
         }
 
+        var roomExists = await _context.Rooms.AnyAsync(r => r.Id == model.RoomId);
+        if (!roomExists)
+        {
+            ModelState.AddModelError(nameof(ReservationFormViewModel.RoomId), "Please select a valid room.");
+            return await ReRenderCreateAsync(model, student);
+        }
+
         var startTime = TimeSpan.FromMinutes(model.StartMinutes);
         var duration = student.LessonDuration;
         var endTime = startTime + duration;

@@ -27,6 +27,7 @@ public class ReservationFormViewModel
     public int RoomId { get; set; }
 
     [Required]
+    [EnumDataType(typeof(DayOfWeek))]
     [Display(Name = "Day")]
     public DayOfWeek DayOfWeek { get; set; }
 
@@ -34,6 +35,7 @@ public class ReservationFormViewModel
     /// Minutes since midnight, bound from the time-slot select.
     /// </summary>
     [Required]
+    [Range(0, 1439)]
     [Display(Name = "Start time")]
     public int StartMinutes { get; set; }
 
