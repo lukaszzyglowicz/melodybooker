@@ -167,9 +167,10 @@ public class TeacherReservationsController : Controller
 
     private async Task<List<StudentReservationSummary>> GetExistingReservationsAsync(int roomId, DayOfWeek dayOfWeek)
     {
-        return await _context.Reservations
+        // Ordering by TimeSpan in the database is rejected by the SQLite provider (used in the
+        // test host), so the list is materialized first and ordered client-side instead.
+        var reservations = await _context.Reservations
             .Where(r => r.RoomId == roomId && r.DayOfWeek == dayOfWeek)
-            .OrderBy(r => r.StartTime)
             .Select(r => new StudentReservationSummary
             {
                 RoomName = r.Room!.Name,
@@ -178,5 +179,7 @@ public class TeacherReservationsController : Controller
                 EndTime = r.EndTime,
             })
             .ToListAsync();
+
+        return reservations.OrderBy(r => r.StartTime).ToList();
     }
 }

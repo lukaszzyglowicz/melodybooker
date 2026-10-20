@@ -254,5 +254,5 @@ No new EF Core migration is required — `Rooms`/`Reservations` tables already e
 
 #### Automated
 
-- [ ] 3.1 Final `dotnet build melodybooker.sln` succeeds
-- [ ] 3.2 `dotnet test` passes in full (all new + existing tests)
+- [x] 3.1 Final `dotnet build melodybooker.sln` succeeds
+- [x] 3.2 `dotnet test` passes in full (all new + existing tests)
