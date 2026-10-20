@@ -42,4 +42,13 @@ public class Reservation
     /// </summary>
     public static bool Overlaps(TimeSpan startA, TimeSpan endA, TimeSpan startB, TimeSpan endB) =>
         startA < endB && startB < endA;
+
+    /// <summary>
+    /// True when <paramref name="room"/> is a specialist room whose instrument doesn't match
+    /// <paramref name="student"/>'s instrument (FR-011's soft warning). A non-specialist room
+    /// never mismatches; a specialist room mismatches any student not playing that exact
+    /// specialist instrument, including <see cref="Instrument.Other"/>.
+    /// </summary>
+    public static bool IsInstrumentMismatch(Room room, Student student) =>
+        room.IsSpecialistRoom && room.SpecialistInstrument != student.Instrument;
 }
