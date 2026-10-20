@@ -1,0 +1,70 @@
+@using melody.Models.ViewModels
+@model ReservationFormViewModel
+@{
+    ViewData["Title"] = "Book a room";
+}
+
+<h1>Book a room</h1>
+
+<dl class="row">
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.StudentFullName)</dt>
+    <dd class="col-sm-10">@Model.StudentFullName</dd>
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.StudentLessonDuration)</dt>
+    <dd class="col-sm-10">@Model.StudentLessonDuration.ToString(@"hh\:mm")</dd>
+</dl>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Create" method="post">
+    <input type="hidden" asp-for="StudentId" />
+
+    <div class="form-group mb-3">
+        <label asp-for="RoomId" class="control-label"></label>
+        <select asp-for="RoomId" class="form-control" asp-items="Model.Rooms">
+            <option value="">-- Select room --</option>
+        </select>
+        <span asp-validation-for="RoomId" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="DayOfWeek" class="control-label"></label>
+        <select asp-for="DayOfWeek" class="form-control" asp-items="Html.GetEnumSelectList<DayOfWeek>()"></select>
+        <span asp-validation-for="DayOfWeek" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="StartMinutes" class="control-label"></label>
+        <select asp-for="StartMinutes" class="form-control" asp-items="Model.TimeSlots"></select>
+        <span asp-validation-for="StartMinutes" class="text-danger"></span>
+    </div>
+
+    @if (Model.ExistingReservationsForRoomAndDay.Any())
+    {
+        <h3>Existing bookings for this room and day</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in Model.ExistingReservationsForRoomAndDay)
+                {
+                    <tr>
+                        <td>@reservation.DayOfWeek</td>
+                        <td>@reservation.StartTime.ToString(@"hh\:mm")</td>
+                        <td>@reservation.EndTime.ToString(@"hh\:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <button type="submit" formmethod="get" class="btn btn-outline-secondary">Check availability</button>
+    <button type="submit" class="btn btn-primary">Book room</button>
+    <a asp-controller="Teacher" asp-action="Index" class="btn btn-link">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

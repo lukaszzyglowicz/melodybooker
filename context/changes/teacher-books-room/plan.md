@@ -239,16 +239,16 @@ No new EF Core migration is required — `Rooms`/`Reservations` tables already e
 
 #### Automated
 
-- [ ] 2.1 `dotnet build melodybooker.sln` succeeds
+- [x] 2.1 `dotnet build melodybooker.sln` succeeds
 
 #### Manual
 
-- [ ] 2.2 Check-availability round trip shows existing bookings without saving
-- [ ] 2.3 Successful booking with no conflict
-- [ ] 2.4 Exact-duplicate Room/Day/Time rejected
-- [ ] 2.5 Overlapping-different-start Room/Day/Time rejected
-- [ ] 2.6 Back-to-back Room/Day/Time accepted
-- [ ] 2.7 Room dropdown shows names only, no specialist indicator
+- [x] 2.2 Check-availability round trip shows existing bookings without saving
+- [x] 2.3 Successful booking with no conflict
+- [x] 2.4 Exact-duplicate Room/Day/Time rejected
+- [x] 2.5 Overlapping-different-start Room/Day/Time rejected
+- [x] 2.6 Back-to-back Room/Day/Time accepted
+- [x] 2.7 Room dropdown shows names only, no specialist indicator
 
 ### Phase 3: Integration tests
 

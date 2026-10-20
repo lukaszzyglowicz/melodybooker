@@ -20,6 +20,7 @@ else
                 <th>@Html.DisplayNameFor(m => m.First().FullName)</th>
                 <th>@Html.DisplayNameFor(m => m.First().Class)</th>
                 <th>Instrument</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +30,9 @@ else
                     <td>@student.FullName</td>
                     <td>@student.Class</td>
                     <td>@student.Instrument</td>
+                    <td>
+                        <a asp-controller="TeacherReservations" asp-action="Create" asp-route-studentId="@student.Id" class="btn btn-sm btn-primary">Book a room</a>
+                    </td>
                 </tr>
             }
         </tbody>
