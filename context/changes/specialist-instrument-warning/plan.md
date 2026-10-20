@@ -188,8 +188,8 @@ None — `HadInstrumentMismatchWarning` and `Room.SpecialistInstrument` already 
 
 #### Automated
 
-- [x] 1.1 `dotnet build melodybooker.sln` succeeds
-- [x] 1.2 `dotnet test --filter FullyQualifiedName~InstrumentMismatchTests` passes (matching, mismatched-specialist, non-specialist-instrument, Other, non-specialist-room cases)
+- [x] 1.1 `dotnet build melodybooker.sln` succeeds — dd6fc16
+- [x] 1.2 `dotnet test --filter FullyQualifiedName~InstrumentMismatchTests` passes (matching, mismatched-specialist, non-specialist-instrument, Other, non-specialist-room cases) — dd6fc16
 
 ### Phase 2: Warn-then-confirm controller/view flow
 
