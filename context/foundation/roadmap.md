@@ -3,7 +3,7 @@ project: "MelodyBooker"
 version: 1
 status: draft
 created: 2026-10-06
-updated: 2026-10-19
+updated: 2026-10-20
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
@@ -45,7 +45,7 @@ Music teachers currently plan room reservations by hand in Excel, which cannot e
 | F-02 | deployment-skeleton          | (foundation) App deploys to Azure App Service via GitHub Actions on merge          | —              | tech-stack.md deployment target | blocked  |
 | S-01 | admin-roster-management      | Administrator adds/edits/removes teachers and students, assigns student→teacher    | F-01           | FR-003, FR-004, FR-005, FR-006  | done |
 | S-02 | teacher-student-list         | Teacher logs in and sees the list of their assigned students                        | F-01, S-01     | FR-007                          | done |
-| S-03 | teacher-books-room           | Teacher reserves a room for a student's weekly lesson (auto duration, no double-booking) | F-01, S-02 | FR-008, FR-009, FR-010, US-01   | in-progress |
+| S-03 | teacher-books-room           | Teacher reserves a room for a student's weekly lesson (auto duration, no double-booking) | F-01, S-02 | FR-008, FR-009, FR-010, US-01   | done |
 | S-04 | specialist-instrument-warning| Teacher sees a soft warning before confirming a specialist-room/mismatched-student booking | S-03    | FR-011, US-02                   | proposed |
 | S-05 | admin-reservation-oversight  | Administrator views and edits/cancels any reservation in the system                 | F-01, S-03     | FR-013, FR-014                  | proposed |
 
@@ -138,7 +138,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:**
   - How exactly should school holidays/breaks be handled in the weekly, full-school-year schedule? — Owner: user. Block: no (PRD's Non-Goals already settle this as manual, teacher-driven cancel/move of single occurrences; the mechanism for that doesn't gate creating the recurring booking itself, but affects a later refinement).
 - **Risk:** The double-booking guardrail is the single highest-risk piece of business logic in the whole MVP — the existing DB unique index only catches exact `(room, day, start time)` matches, so the application layer must also reject overlapping-duration conflicts at different start times in the same room.
-- **Status:** in-progress
+- **Status:** done
 
 ### S-04: System warns on specialist-instrument mismatch
 
@@ -206,3 +206,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **S-01: Administrator can add, edit, and remove teachers and students, and assign each student to exactly one teacher — including safe handling (reassign or block) when a teacher/student with active assignments or reservations is removed.** — Archived 2026-10-09 → `context/archive/2026-10-09-admin-roster-management/`. Lesson: —.
 - **F-01: (foundation) Every controller/area enforces the correct role (`Administrator` vs `Teacher`); an administrator account exists at startup so the first admin can log in without any public sign-up flow (per Access Control, there is none).** — Archived 2026-10-10 → `context/archive/2026-10-07-role-based-authorization/`. Lesson: —.
 - **S-02: Teacher logs in and sees the list of their assigned students** — Archived 2026-10-13 → `context/archive/2026-10-10-teacher-student-list/`. Lesson: —.
+- **S-03: Teacher reserves a room for an assigned student's weekly lesson (day of week + time); duration is auto-derived from the student's class; the booking repeats weekly for the whole school year; booking an already-taken room/time slot is always hard-blocked, with no override.** — Archived 2026-10-20 → `context/archive/2026-10-19-teacher-books-room/`. Lesson: —.
