@@ -3,7 +3,7 @@ project: "MelodyBooker"
 version: 1
 status: draft
 created: 2026-10-06
-updated: 2026-10-20
+updated: 2026-10-21
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
@@ -46,7 +46,7 @@ Music teachers currently plan room reservations by hand in Excel, which cannot e
 | S-01 | admin-roster-management      | Administrator adds/edits/removes teachers and students, assigns student→teacher    | F-01           | FR-003, FR-004, FR-005, FR-006  | done |
 | S-02 | teacher-student-list         | Teacher logs in and sees the list of their assigned students                        | F-01, S-01     | FR-007                          | done |
 | S-03 | teacher-books-room           | Teacher reserves a room for a student's weekly lesson (auto duration, no double-booking) | F-01, S-02 | FR-008, FR-009, FR-010, US-01   | done |
-| S-04 | specialist-instrument-warning| Teacher sees a soft warning before confirming a specialist-room/mismatched-student booking | S-03    | FR-011, US-02                   | in-progress |
+| S-04 | specialist-instrument-warning| Teacher sees a soft warning before confirming a specialist-room/mismatched-student booking | S-03    | FR-011, US-02                   | done |
 | S-05 | admin-reservation-oversight  | Administrator views and edits/cancels any reservation in the system                 | F-01, S-03     | FR-013, FR-014                  | proposed |
 
 ## Streams
@@ -150,7 +150,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Low — a validation/UI addition on top of S-03's booking flow; the main risk is ordering (warn before confirm, not after), which the PRD's acceptance criteria already pin down.
-- **Status:** in-progress
+- **Status:** done
 
 ### S-05: Administrator oversees all reservations
 
@@ -207,3 +207,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **F-01: (foundation) Every controller/area enforces the correct role (`Administrator` vs `Teacher`); an administrator account exists at startup so the first admin can log in without any public sign-up flow (per Access Control, there is none).** — Archived 2026-10-10 → `context/archive/2026-10-07-role-based-authorization/`. Lesson: —.
 - **S-02: Teacher logs in and sees the list of their assigned students** — Archived 2026-10-13 → `context/archive/2026-10-10-teacher-student-list/`. Lesson: —.
 - **S-03: Teacher reserves a room for an assigned student's weekly lesson (day of week + time); duration is auto-derived from the student's class; the booking repeats weekly for the whole school year; booking an already-taken room/time slot is always hard-blocked, with no override.** — Archived 2026-10-20 → `context/archive/2026-10-19-teacher-books-room/`. Lesson: —.
+- **S-04: When a teacher books a specialist room (piano/xylophone/drums) for a student who doesn't play that instrument, they see a warning before final confirmation but can still complete the booking.** — Archived 2026-10-21 → `context/archive/2026-10-20-specialist-instrument-warning/`. Lesson: —.
