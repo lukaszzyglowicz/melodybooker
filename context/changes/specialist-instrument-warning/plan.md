@@ -195,18 +195,18 @@ None — `HadInstrumentMismatchWarning` and `Room.SpecialistInstrument` already 
 
 #### Automated
 
-- [x] 2.1 `dotnet build melodybooker.sln` succeeds
+- [x] 2.1 `dotnet build melodybooker.sln` succeeds — 73046bf
 
 #### Manual
 
-- [ ] 2.2 Booking a specialist room for a mismatched student shows the warning banner and does not create a reservation
-- [ ] 2.3 Clicking "Book anyway" on the warned form creates the reservation
-- [ ] 2.4 Booking a specialist room for a matching-instrument student creates the reservation immediately, no warning shown
-- [ ] 2.5 Booking a non-specialist room never shows the warning, regardless of student instrument
+- [x] 2.2 Booking a specialist room for a mismatched student shows the warning banner and does not create a reservation — 73046bf
+- [x] 2.3 Clicking "Book anyway" on the warned form creates the reservation — 73046bf
+- [x] 2.4 Booking a specialist room for a matching-instrument student creates the reservation immediately, no warning shown — 73046bf
+- [x] 2.5 Booking a non-specialist room never shows the warning, regardless of student instrument — 73046bf
 
 ### Phase 3: Integration tests
 
 #### Automated
 
-- [ ] 3.1 Final `dotnet build melodybooker.sln` succeeds
-- [ ] 3.2 `dotnet test` passes in full (all new + existing tests)
+- [x] 3.1 Final `dotnet build melodybooker.sln` succeeds
+- [x] 3.2 `dotnet test` passes in full (all new + existing tests)
