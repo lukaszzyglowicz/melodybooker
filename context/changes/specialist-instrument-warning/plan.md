@@ -208,5 +208,5 @@ None — `HadInstrumentMismatchWarning` and `Room.SpecialistInstrument` already 
 
 #### Automated
 
-- [x] 3.1 Final `dotnet build melodybooker.sln` succeeds
-- [x] 3.2 `dotnet test` passes in full (all new + existing tests)
+- [x] 3.1 Final `dotnet build melodybooker.sln` succeeds — 3a9b8f1
+- [x] 3.2 `dotnet test` passes in full (all new + existing tests) — 3a9b8f1
