@@ -36,6 +36,15 @@
         <span asp-validation-for="StartMinutes" class="text-danger"></span>
     </div>
 
+    @if (Model.ShowMismatchWarning)
+    {
+        <div class="alert alert-warning">@Model.MismatchWarningMessage</div>
+        <input type="hidden" name="ConfirmedRoomId" value="@Model.RoomId" />
+        <input type="hidden" name="ConfirmedDayOfWeek" value="@Model.DayOfWeek" />
+        <input type="hidden" name="ConfirmedStartMinutes" value="@Model.StartMinutes" />
+        <input type="hidden" name="Confirmed" value="true" />
+    }
+
     @if (Model.ExistingReservationsForRoomAndDay.Any())
     {
         <h3>Existing bookings for this room and day</h3>
@@ -61,7 +70,7 @@
     }
 
     <button type="submit" formmethod="get" class="btn btn-outline-secondary">Check availability</button>
-    <button type="submit" class="btn btn-primary">Book room</button>
+    <button type="submit" class="btn btn-primary">@(Model.ShowMismatchWarning ? "Book anyway" : "Book room")</button>
     <a asp-controller="Teacher" asp-action="Index" class="btn btn-link">Cancel</a>
 </form>
 

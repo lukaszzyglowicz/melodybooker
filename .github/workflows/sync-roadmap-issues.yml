@@ -1,0 +1,25 @@
+name: Sync roadmap -> GitHub Issues
+
+# Closes any open issue whose title starts with "[<roadmap-id>]" (e.g. "[S-03]") when
+# context/foundation/roadmap.md marks that roadmap item as `done` in its "## At a glance"
+# table. Read-only on the roadmap file; only ever closes issues, never opens/reopens/relabels.
+
+on:
+  push:
+    paths:
+      - "context/foundation/roadmap.md"
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  sync-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Close issues for roadmap items marked done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 .github/scripts/sync-roadmap-issues.py "${{ github.repository }}"

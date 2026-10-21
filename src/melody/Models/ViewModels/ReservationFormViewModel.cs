@@ -51,4 +51,30 @@ public class ReservationFormViewModel
     /// </summary>
     [ValidateNever]
     public List<StudentReservationSummary> ExistingReservationsForRoomAndDay { get; set; } = [];
+
+    /// <summary>
+    /// Posted back from the hidden fields rendered on a warned form, pinning the teacher's
+    /// confirmation to the exact Room/Day/Time combination they were warned about.
+    /// </summary>
+    [ValidateNever]
+    public bool Confirmed { get; set; }
+
+    [ValidateNever]
+    public int? ConfirmedRoomId { get; set; }
+
+    [ValidateNever]
+    public DayOfWeek? ConfirmedDayOfWeek { get; set; }
+
+    [ValidateNever]
+    public int? ConfirmedStartMinutes { get; set; }
+
+    /// <summary>
+    /// Controller-set only, never bound from the form: true when the just-submitted Room/Student
+    /// combination is an instrument mismatch that hasn't yet been confirmed.
+    /// </summary>
+    [ValidateNever]
+    public bool ShowMismatchWarning { get; set; }
+
+    [ValidateNever]
+    public string? MismatchWarningMessage { get; set; }
 }

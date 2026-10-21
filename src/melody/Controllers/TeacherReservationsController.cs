@@ -67,8 +67,8 @@ public class TeacherReservationsController : Controller
             return await ReRenderCreateAsync(model, student);
         }
 
-        var roomExists = await _context.Rooms.AnyAsync(r => r.Id == model.RoomId);
-        if (!roomExists)
+        var room = await _context.Rooms.FirstOrDefaultAsync(r => r.Id == model.RoomId);
+        if (room is null)
         {
             ModelState.AddModelError(nameof(ReservationFormViewModel.RoomId), "Please select a valid room.");
             return await ReRenderCreateAsync(model, student);
@@ -91,6 +91,20 @@ public class TeacherReservationsController : Controller
             return await ReRenderCreateAsync(model, student);
         }
 
+        var hasInstrumentMismatch = Reservation.IsInstrumentMismatch(room, student);
+        var confirmedForThisCombination = model.Confirmed
+            && model.ConfirmedRoomId == model.RoomId
+            && model.ConfirmedDayOfWeek == model.DayOfWeek
+            && model.ConfirmedStartMinutes == model.StartMinutes;
+
+        if (hasInstrumentMismatch && !confirmedForThisCombination)
+        {
+            model.ShowMismatchWarning = true;
+            model.MismatchWarningMessage =
+                $"{room.Name} is a specialist room for {room.SpecialistInstrument}, but {student.FullName} plays {student.Instrument}. You can still book this room if needed.";
+            return await ReRenderCreateAsync(model, student);
+        }
+
         _context.Reservations.Add(new Reservation
         {
             RoomId = model.RoomId,
@@ -99,6 +113,7 @@ public class TeacherReservationsController : Controller
             DayOfWeek = model.DayOfWeek,
             StartTime = startTime,
             Duration = duration,
+            HadInstrumentMismatchWarning = hasInstrumentMismatch,
         });
 
         try
