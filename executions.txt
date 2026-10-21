@@ -38,3 +38,7 @@ czyli co mam uruchomic aplkacjie? loakalnie i przetetowac?
 lokalnie nie moge uruchomic aplkajciji dostaje blad System.InvalidOperationException: 'A connection string was not found. Please set your connection string.'
 sam skomitowaelm teraz kontynuuuuj
 aktualizuj mi plik Histoty.md oraz executions.txt tak jak zawsze
+
+
+git worktree add ../10xcards-account-deletion -b feature/account-deletion
+git worktree add ../10xcards-ux-improvements -b feature/ux-improvements
