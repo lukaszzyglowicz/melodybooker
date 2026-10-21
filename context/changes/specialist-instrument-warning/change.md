@@ -1,9 +1,9 @@
 ---
 change_id: specialist-instrument-warning
 title: System warns on specialist-instrument mismatch
-status: implementing
+status: implemented
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-21
 archived_at: null
 ---
 
