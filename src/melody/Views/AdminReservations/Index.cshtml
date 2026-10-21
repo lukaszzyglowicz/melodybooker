@@ -1,0 +1,47 @@
+@using melody.Models.ViewModels
+@model List<AdminReservationListItemViewModel>
+@{
+    ViewData["Title"] = "All reservations";
+}
+
+<h1>All reservations</h1>
+
+@if (!Model.Any())
+{
+    <p>No reservations yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.First().TeacherFullName)</th>
+                <th>@Html.DisplayNameFor(m => m.First().StudentFullName)</th>
+                <th>@Html.DisplayNameFor(m => m.First().RoomName)</th>
+                <th>Day</th>
+                <th>Start&ndash;End</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in Model)
+            {
+                <tr>
+                    <td>@reservation.TeacherFullName</td>
+                    <td>@reservation.StudentFullName</td>
+                    <td>@reservation.RoomName</td>
+                    <td>@reservation.DayOfWeek</td>
+                    <td>@reservation.StartTime.ToString(@"hh\:mm")-@reservation.EndTime.ToString(@"hh\:mm")</td>
+                    <td>
+                        <a class="btn btn-sm btn-secondary" asp-action="Edit" asp-route-id="@reservation.Id" aria-label="Edit reservation for @reservation.StudentFullName">Edit</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@reservation.Id" aria-label="Cancel reservation for @reservation.StudentFullName">Cancel</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<p>
+    <a asp-controller="Admin" asp-action="Index">Back to dashboard</a>
+</p>
