@@ -136,6 +136,34 @@ public class SpecialistInstrumentWarningTests : IClassFixture<MelodyWebApplicati
         Assert.Equal(0, count);
     }
 
+    [Fact]
+    public async Task Create_ConfirmedForDifferentStudent_ReWarnsInsteadOfSaving()
+    {
+        var (teacherUserId, _, studentId) = await SeedTeacherWithStudentAsync(
+            "Teacher Stale Student Confirmation", classNumber: 3, Instrument.Violin);
+        var (_, _, otherStudentId) = await SeedTeacherWithStudentAsync(
+            "Teacher Other Student", classNumber: 3, Instrument.Violin);
+        var roomId = await SeedRoomAsync(Instrument.Piano);
+        var client = _factory.CreateClientAs("Teacher", teacherUserId);
+
+        // Confirmation is pinned to a different student than the one actually being submitted:
+        // the stale confirmation must not carry over to a different student's booking.
+        var token = await GetAntiForgeryTokenAsync(client, studentId);
+        var response = await PostCreateAsync(
+            client, token, studentId, roomId, DayOfWeek.Saturday, 540,
+            confirmed: true, confirmedRoomId: roomId, confirmedDayOfWeek: DayOfWeek.Saturday, confirmedStartMinutes: 540,
+            confirmedStudentId: otherStudentId);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.Contains("alert-warning", body);
+
+        using var scope = _factory.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var count = await context.Reservations.CountAsync(r => r.RoomId == roomId && r.DayOfWeek == DayOfWeek.Saturday);
+        Assert.Equal(0, count);
+    }
+
     private async Task<string> GetAntiForgeryTokenAsync(HttpClient client, int studentId)
     {
         var response = await client.GetAsync($"/TeacherReservations/Create?studentId={studentId}");
@@ -153,7 +181,8 @@ public class SpecialistInstrumentWarningTests : IClassFixture<MelodyWebApplicati
         bool? confirmed = null,
         int? confirmedRoomId = null,
         DayOfWeek? confirmedDayOfWeek = null,
-        int? confirmedStartMinutes = null)
+        int? confirmedStartMinutes = null,
+        int? confirmedStudentId = null)
     {
         var formValues = new Dictionary<string, string>
         {
@@ -170,6 +199,10 @@ public class SpecialistInstrumentWarningTests : IClassFixture<MelodyWebApplicati
             formValues["ConfirmedRoomId"] = confirmedRoomId!.Value.ToString();
             formValues["ConfirmedDayOfWeek"] = ((int)confirmedDayOfWeek!.Value).ToString();
             formValues["ConfirmedStartMinutes"] = confirmedStartMinutes!.Value.ToString();
+            // Defaults to the same student being submitted: every current test confirms for the
+            // same student that was warned about, so this keeps those call sites unchanged while
+            // still letting a future test pin a deliberately different ConfirmedStudentId.
+            formValues["ConfirmedStudentId"] = (confirmedStudentId ?? studentId).ToString();
         }
 
         return await client.PostAsync("/TeacherReservations/Create", new FormUrlEncodedContent(formValues));

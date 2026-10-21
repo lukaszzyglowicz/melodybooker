@@ -95,14 +95,25 @@ public class TeacherReservationsController : Controller
         var confirmedForThisCombination = model.Confirmed
             && model.ConfirmedRoomId == model.RoomId
             && model.ConfirmedDayOfWeek == model.DayOfWeek
-            && model.ConfirmedStartMinutes == model.StartMinutes;
+            && model.ConfirmedStartMinutes == model.StartMinutes
+            && model.ConfirmedStudentId == model.StudentId;
 
         if (hasInstrumentMismatch && !confirmedForThisCombination)
         {
             model.ShowMismatchWarning = true;
             model.MismatchWarningMessage =
                 $"{room.Name} is a specialist room for {room.SpecialistInstrument}, but {student.FullName} plays {student.Instrument}. You can still book this room if needed.";
-            return await ReRenderCreateAsync(model, student);
+            var reservationsForRender = existingReservations
+                .Select(r => new StudentReservationSummary
+                {
+                    RoomName = room.Name,
+                    DayOfWeek = r.DayOfWeek,
+                    StartTime = r.StartTime,
+                    EndTime = r.EndTime,
+                })
+                .OrderBy(r => r.StartTime)
+                .ToList();
+            return await ReRenderCreateAsync(model, student, reservationsForRender);
         }
 
         _context.Reservations.Add(new Reservation
@@ -131,13 +142,17 @@ public class TeacherReservationsController : Controller
         return RedirectToAction("Index", "Teacher");
     }
 
-    private async Task<IActionResult> ReRenderCreateAsync(ReservationFormViewModel model, Student student)
+    private async Task<IActionResult> ReRenderCreateAsync(
+        ReservationFormViewModel model,
+        Student student,
+        List<StudentReservationSummary>? existingReservationsForRoomAndDay = null)
     {
         model.StudentFullName = student.FullName;
         model.StudentLessonDuration = student.LessonDuration;
         model.Rooms = await GetRoomSelectListAsync();
         model.TimeSlots = GetTimeSlotSelectList();
-        model.ExistingReservationsForRoomAndDay = await GetExistingReservationsAsync(model.RoomId, model.DayOfWeek);
+        model.ExistingReservationsForRoomAndDay = existingReservationsForRoomAndDay
+            ?? await GetExistingReservationsAsync(model.RoomId, model.DayOfWeek);
 
         return View(model);
     }

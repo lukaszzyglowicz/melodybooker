@@ -69,6 +69,14 @@ public class ReservationFormViewModel
     public int? ConfirmedStartMinutes { get; set; }
 
     /// <summary>
+    /// Pins the confirmation to the exact Student too, so tampering with the hidden StudentId
+    /// field between the warning render and a confirmed re-submit can't silently reuse a stale
+    /// Room/Day/Time pin for a different student than the one actually warned about.
+    /// </summary>
+    [ValidateNever]
+    public int? ConfirmedStudentId { get; set; }
+
+    /// <summary>
     /// Controller-set only, never bound from the form: true when the just-submitted Room/Student
     /// combination is an instrument mismatch that hasn't yet been confirmed.
     /// </summary>
