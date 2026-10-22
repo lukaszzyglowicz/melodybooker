@@ -227,15 +227,15 @@ None — no schema changes; this plan only adds a new controller/viewmodels/view
 
 #### Manual
 
-- [ ] 2.2 The hub page's "View all reservations" link reaches a list of every reservation in the system, sorted by Teacher then Day then Start time
-- [ ] 2.3 Editing a reservation to a new Room/Day/Time succeeds and the change is reflected in the list
-- [ ] 2.4 Editing a reservation into a double-booking conflict is hard-blocked with an error, same message as the teacher path
-- [ ] 2.5 Editing a reservation into a specialist-mismatch room shows the warning banner; confirming ("Confirm change") saves it
-- [ ] 2.6 Cancelling a reservation removes it from the list after confirming on the dedicated Delete page
+- [x] 2.2 The hub page's "View all reservations" link reaches a list of every reservation in the system, sorted by Teacher then Day then Start time — 419b88c
+- [x] 2.3 Editing a reservation to a new Room/Day/Time succeeds and the change is reflected in the list — 419b88c
+- [x] 2.4 Editing a reservation into a double-booking conflict is hard-blocked with an error, same message as the teacher path — 419b88c
+- [x] 2.5 Editing a reservation into a specialist-mismatch room shows the warning banner; confirming ("Confirm change") saves it — 419b88c
+- [x] 2.6 Cancelling a reservation removes it from the list after confirming on the dedicated Delete page — 419b88c
 
 ### Phase 3: Integration tests
 
 #### Automated
 
-- [ ] 3.1 Final `dotnet build melodybooker.sln` succeeds
-- [ ] 3.2 `dotnet test` passes in full (all new + existing tests)
+- [x] 3.1 Final `dotnet build melodybooker.sln` succeeds
+- [x] 3.2 `dotnet test` passes in full (all new + existing tests)
