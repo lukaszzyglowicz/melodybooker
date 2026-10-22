@@ -1,9 +1,9 @@
 ---
 change_id: admin-reservation-oversight
 title: Administrator views and edits/cancels any reservation in the system
-status: implementing
+status: implemented
 created: 2026-10-21
-updated: 2026-10-21
+updated: 2026-10-22
 archived_at: null
 ---
 
