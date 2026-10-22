@@ -29,7 +29,7 @@ else
                 <tr>
                     <td>@reservation.TeacherFullName</td>
                     <td>@reservation.StudentFullName</td>
-                    <td>@reservation.RoomName</td>
+                    <td>@reservation.RoomName @if (reservation.HadInstrumentMismatchWarning) { <span class="badge bg-warning text-dark" title="Booked despite an instrument/room specialist mismatch">Mismatch</span> }</td>
                     <td>@reservation.DayOfWeek</td>
                     <td>@reservation.StartTime.ToString(@"hh\:mm")-@reservation.EndTime.ToString(@"hh\:mm")</td>
                     <td>

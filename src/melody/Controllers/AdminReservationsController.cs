@@ -51,7 +51,7 @@ public class AdminReservationsController : Controller
         return View(ordered);
     }
 
-    public async Task<IActionResult> Edit(int id)
+    public async Task<IActionResult> Edit(int id, int? roomId, DayOfWeek? dayOfWeek, int? startMinutes)
     {
         var reservation = await _context.Reservations
             .Include(r => r.Teacher)
@@ -64,19 +64,25 @@ public class AdminReservationsController : Controller
             return NotFound();
         }
 
+        // "Check availability" resubmits the admin's in-progress Room/Day/Time selection as a
+        // GET (mirroring TeacherReservationsController.Create) so the table below previews that
+        // combination instead of the reservation's currently-persisted values.
+        var effectiveRoomId = roomId ?? reservation.RoomId;
+        var effectiveDayOfWeek = dayOfWeek ?? reservation.DayOfWeek;
+
         var model = new AdminReservationEditViewModel
         {
             Id = reservation.Id,
             TeacherFullName = reservation.Teacher!.FullName,
             StudentFullName = reservation.Student!.FullName,
             StudentLessonDuration = reservation.Student!.LessonDuration,
-            RoomId = reservation.RoomId,
-            DayOfWeek = reservation.DayOfWeek,
-            StartMinutes = (int)reservation.StartTime.TotalMinutes,
+            RoomId = effectiveRoomId,
+            DayOfWeek = effectiveDayOfWeek,
+            StartMinutes = startMinutes ?? (int)reservation.StartTime.TotalMinutes,
             Rooms = await GetRoomSelectListAsync(),
             TimeSlots = GetTimeSlotSelectList(),
             ExistingReservationsForRoomAndDay =
-                await GetExistingReservationsAsync(reservation.RoomId, reservation.DayOfWeek, reservation.Id),
+                await GetExistingReservationsAsync(effectiveRoomId, effectiveDayOfWeek, reservation.Id),
         };
 
         return View(model);
