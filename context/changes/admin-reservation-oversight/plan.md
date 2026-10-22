@@ -223,7 +223,7 @@ None — no schema changes; this plan only adds a new controller/viewmodels/view
 
 #### Automated
 
-- [ ] 2.1 `dotnet build melodybooker.sln` succeeds
+- [x] 2.1 `dotnet build melodybooker.sln` succeeds — 419b88c
 
 #### Manual
 
