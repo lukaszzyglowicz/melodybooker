@@ -3,7 +3,7 @@ project: "MelodyBooker"
 version: 1
 status: draft
 created: 2026-10-06
-updated: 2026-10-22
+updated: 2026-10-26
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
@@ -42,7 +42,7 @@ Music teachers currently plan room reservations by hand in Excel, which cannot e
 | ID   | Change ID                   | Outcome (user can …)                                                              | Prerequisites | PRD refs                       | Status   |
 | ---- | ---------------------------- | ---------------------------------------------------------------------------------- | -------------- | ------------------------------- | -------- |
 | F-01 | role-based-authorization     | (foundation) Role-scoped login/authorization enforced; admin account seeded        | —              | FR-001, FR-002, Access Control  | done |
-| F-02 | deployment-skeleton          | (foundation) App deploys to Azure App Service via GitHub Actions on merge          | —              | tech-stack.md deployment target | blocked  |
+| F-02 | deployment-skeleton          | (foundation) App deploys to Azure App Service via GitHub Actions on merge          | —              | tech-stack.md deployment target | ready    |
 | S-01 | admin-roster-management      | Administrator adds/edits/removes teachers and students, assigns student→teacher    | F-01           | FR-003, FR-004, FR-005, FR-006  | done |
 | S-02 | teacher-student-list         | Teacher logs in and sees the list of their assigned students                        | F-01, S-01     | FR-007                          | done |
 | S-03 | teacher-books-room           | Teacher reserves a room for a student's weekly lesson (auto duration, no double-booking) | F-01, S-02 | FR-008, FR-009, FR-010, US-01   | done |
@@ -96,10 +96,10 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Prerequisites:** —
 - **Parallel with:** F-01, S-01
 - **Blockers:** —
-- **Unknowns:**
-  - Is an Azure subscription / App Service resource already provisioned for this school, or does one need to be created first? — Owner: user. Block: yes.
+- **Unknowns:** — (resolved 2026-10-26: Azure subscription and App Service already exist for this school; user wants the resource(s) redefined as code so the environment is destroy/recreate-able from scratch — see Decisions below.)
+- **Decisions:** Infrastructure must be defined in Bicep (not click-ops) — the existing App Service should be re-provisioned/managed via a Bicep template so the whole environment can be torn down and rebuilt from zero at any time.
 - **Risk:** Given capacity (after-hours-only solo developer) is the top blocker, discovering Azure/CI friction only at the very end — right before the deadline — is the riskiest possible sequencing; better to surface provisioning gaps now.
-- **Status:** blocked
+- **Status:** ready
 
 ## Slices
 
@@ -169,7 +169,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | Roadmap ID | Change ID                      | Suggested issue title                                              | Ready for `/10x-plan` | Notes                                      |
 | ---------- | -------------------------------- | ---------------------------------------------------------------------- | ---------------------- | --------------------------------------------- |
 | F-01       | role-based-authorization         | Enforce role-based authorization and seed an administrator account     | yes                     | Run `/10x-plan role-based-authorization`       |
-| F-02       | deployment-skeleton              | Stand up Azure App Service deploy + GitHub Actions CI                  | no                      | Blocked on Azure subscription/resource confirmation |
+| F-02       | deployment-skeleton              | Stand up Azure App Service deploy + GitHub Actions CI                  | yes                     | Unblocked 2026-10-26 — Azure subscription/App Service confirmed; provision via Bicep. Run `/10x-plan deployment-skeleton` |
 | S-01       | admin-roster-management          | Admin: add/edit/remove teachers & students, assign student to teacher  | no                      | Blocked on F-01                                |
 | S-02       | teacher-student-list              | Teacher: view list of assigned students                                | no                      | Blocked on F-01, S-01                          |
 | S-03       | teacher-books-room                | Teacher: book a weekly recurring room reservation (auto duration, no double-booking) | no   | Blocked on F-01, S-02 — this is the north star |
@@ -179,7 +179,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 ## Open Roadmap Questions
 
 1. **How exactly should school holidays/breaks be handled in the weekly, full-school-year schedule?** — Owner: user. Block: S-03 (non-blocking for creation; relevant to any future exception-handling refinement of the recurring schedule).
-2. **Is an Azure subscription / App Service resource already provisioned for this school?** — Owner: user. Block: F-02.
+2. ~~Is an Azure subscription / App Service resource already provisioned for this school?~~ — **Resolved 2026-10-26**: yes, both exist. New decision: infra will be redefined in Bicep so the environment is destroy/recreate-able from scratch (see F-02 Decisions).
 
 ## Parked
 
