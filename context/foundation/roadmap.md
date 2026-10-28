@@ -42,7 +42,7 @@ Music teachers currently plan room reservations by hand in Excel, which cannot e
 | ID   | Change ID                   | Outcome (user can …)                                                              | Prerequisites | PRD refs                       | Status   |
 | ---- | ---------------------------- | ---------------------------------------------------------------------------------- | -------------- | ------------------------------- | -------- |
 | F-01 | role-based-authorization     | (foundation) Role-scoped login/authorization enforced; admin account seeded        | —              | FR-001, FR-002, Access Control  | done |
-| F-02 | deployment-skeleton          | (foundation) App deploys to Azure App Service via GitHub Actions on merge          | —              | tech-stack.md deployment target | ready    |
+| F-02 | deployment-skeleton          | (foundation) App deploys to Azure App Service via GitHub Actions on merge          | —              | tech-stack.md deployment target | in-progress |
 | S-01 | admin-roster-management      | Administrator adds/edits/removes teachers and students, assigns student→teacher    | F-01           | FR-003, FR-004, FR-005, FR-006  | done |
 | S-02 | teacher-student-list         | Teacher logs in and sees the list of their assigned students                        | F-01, S-01     | FR-007                          | done |
 | S-03 | teacher-books-room           | Teacher reserves a room for a student's weekly lesson (auto duration, no double-booking) | F-01, S-02 | FR-008, FR-009, FR-010, US-01   | done |
@@ -99,7 +99,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:** — (resolved 2026-10-26: Azure subscription and App Service already exist for this school; user wants the resource(s) redefined as code so the environment is destroy/recreate-able from scratch — see Decisions below.)
 - **Decisions:** Infrastructure must be defined in Bicep (not click-ops) — the existing App Service should be re-provisioned/managed via a Bicep template so the whole environment can be torn down and rebuilt from zero at any time.
 - **Risk:** Given capacity (after-hours-only solo developer) is the top blocker, discovering Azure/CI friction only at the very end — right before the deadline — is the riskiest possible sequencing; better to surface provisioning gaps now.
-- **Status:** ready
+- **Status:** in-progress
 
 ## Slices
 
