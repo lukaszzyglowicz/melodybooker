@@ -375,7 +375,7 @@ is created).
 
 #### Automated
 
-- [x] 1.1 GitHub secret AZURE_WEBAPP_PUBLISH_PROFILE is set
+- [x] 1.1 GitHub secret AZURE_WEBAPP_PUBLISH_PROFILE is set — 1507eb3
 
 #### Manual
 
