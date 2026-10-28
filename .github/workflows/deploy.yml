@@ -1,0 +1,78 @@
+name: Build, Test & Deploy (dev)
+
+# Dev-only CI/CD for the Azure Web App `melodybooker-dev-app-k7sqmyvh2szbg` in
+# resource group `melodybooker-rg`. `prod` is intentionally out of scope and is
+# a future follow-up.
+#
+# Infrastructure (Bicep in `infra/`) is NOT applied by this workflow. The
+# tenant blocks non-admin Azure AD app registration, so no CI-side Azure
+# identity capable of `az deployment group create` (which also needs
+# `Microsoft.Authorization/roleAssignments/write`) could be provisioned.
+# Infra changes are reviewed via the normal PR diff, then applied manually by
+# whoever has subscription access — see `infra/README.md` for the local
+# deploy steps.
+#
+# App *code* deploys use the Web App's publish profile (an ARM-level, Kudu/SCM
+# credential gated by `Microsoft.Web/sites/*` RBAC) instead of OIDC/service
+# principal auth, for the same tenant-restriction reason.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+env:
+  DOTNET_VERSION: '10.0.x'
+  AZURE_WEBAPP_NAME: melodybooker-dev-app-k7sqmyvh2szbg
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build
+        run: dotnet build melodybooker.sln --configuration Release
+
+      - name: Test
+        run: dotnet test melodybooker.sln --configuration Release --no-build
+
+  deploy:
+    name: Deploy to dev
+    needs: build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Publish
+        run: dotnet publish src/melody/melody.csproj --configuration Release --output publish-output
+
+      - name: Zip publish output
+        run: |
+          cd publish-output
+          zip -r ../publish-output.zip .
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: publish-output.zip
+
+      - name: Smoke test /health
+        run: |
+          response=$(curl --fail --silent --show-error "https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net/health")
+          echo "Response: $response"
+          echo "$response" | grep -q "Healthy"
