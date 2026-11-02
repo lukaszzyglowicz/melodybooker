@@ -127,6 +127,34 @@ public class TeacherBooksRoomTests : IClassFixture<MelodyWebApplicationFactory>,
     }
 
     [Fact]
+    public async Task Create_SameRoomAndTime_DifferentDayOfWeek_Succeeds()
+    {
+        var (teacherUserId, _, studentId) = await SeedTeacherWithStudentAsync("Teacher CrossDay", classNumber: 7);
+        var roomId = await SeedRoomAsync();
+        var client = _factory.CreateClientAs("Teacher", teacherUserId);
+
+        // Existing booking occupies Monday 9:00-9:40 (class 7 => 40-minute lesson).
+        var firstToken = await GetAntiForgeryTokenAsync(client, studentId);
+        var firstResponse = await PostCreateAsync(client, firstToken, studentId, roomId, DayOfWeek.Monday, 540);
+        Assert.Equal(HttpStatusCode.Redirect, firstResponse.StatusCode);
+
+        // Same room and same start time, but a different day of week, must not conflict.
+        var secondToken = await GetAntiForgeryTokenAsync(client, studentId);
+        var secondResponse = await PostCreateAsync(client, secondToken, studentId, roomId, DayOfWeek.Tuesday, 540);
+
+        Assert.Equal(HttpStatusCode.Redirect, secondResponse.StatusCode);
+
+        using var scope = _factory.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var totalCount = await context.Reservations.CountAsync(r => r.RoomId == roomId);
+        Assert.Equal(2, totalCount);
+        var mondayCount = await context.Reservations.CountAsync(r => r.RoomId == roomId && r.DayOfWeek == DayOfWeek.Monday);
+        Assert.Equal(1, mondayCount);
+        var tuesdayCount = await context.Reservations.CountAsync(r => r.RoomId == roomId && r.DayOfWeek == DayOfWeek.Tuesday);
+        Assert.Equal(1, tuesdayCount);
+    }
+
+    [Fact]
     public async Task Create_Get_ForAnotherTeachersStudent_ReturnsNotFound()
     {
         var (_, _, studentAId) = await SeedTeacherWithStudentAsync("Teacher A Owner", classNumber: 3);
