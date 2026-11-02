@@ -1,7 +1,7 @@
 ---
 change_id: testing-booking-conflict-correctness
 title: Harden double-booking hard-block tests at boundaries and DB state
-status: implementing
+status: implemented
 created: 2026-11-02
 updated: 2026-11-02
 archived_at: null

@@ -159,5 +159,5 @@ plus an exact per-day count of 1 each).
 
 #### Automated
 
-- [x] 1.1 New test passes: `dotnet test --filter FullyQualifiedName~TeacherBooksRoomTests.Create_SameRoomAndTime_DifferentDayOfWeek_Succeeds`
-- [x] 1.2 Full test suite still passes (no regressions): `dotnet test`
+- [x] 1.1 New test passes: `dotnet test --filter FullyQualifiedName~TeacherBooksRoomTests.Create_SameRoomAndTime_DifferentDayOfWeek_Succeeds` — 9706864
+- [x] 1.2 Full test suite still passes (no regressions): `dotnet test` — 9706864
