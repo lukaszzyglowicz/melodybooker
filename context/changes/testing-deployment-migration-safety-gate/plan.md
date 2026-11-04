@@ -253,9 +253,9 @@ band; it is not committed).
 #### Automated
 
 - [x] 2.1 deploy.yml is valid YAML and new job/dependency parse correctly
-- [ ] 2.2 migration-safety-gate job appears and passes on push/PR
+- [x] 2.2 migration-safety-gate job appears and passes on push/PR
 
 #### Manual
 
-- [ ] 2.3 Confirm deploy only starts after both jobs succeed on push to main
-- [ ] 2.4 Temporarily break the migration to confirm the gate fails red, then revert
+- [x] 2.3 Confirm deploy only starts after both jobs succeed on push to main
+- [x] 2.4 Temporarily break the migration to confirm the gate fails red, then revert (satisfied via Phase 1's local break-check against real SQL Server LocalDB — user declined a redundant live-CI repeat)
