@@ -24,7 +24,8 @@ public static class AdminUserSeeder
             return;
         }
 
-        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+        var userManager
+            = services.GetRequiredService<UserManager<ApplicationUser>>();
 
         if (await userManager.FindByEmailAsync(email) is not null)
         {
