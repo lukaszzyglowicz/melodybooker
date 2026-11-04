@@ -1,7 +1,7 @@
 ---
 change_id: testing-deployment-migration-safety-gate
 title: Deployment & migration safety gate (rollout Phase 4)
-status: implementing
+status: implemented
 created: 2026-11-04
 updated: 2026-11-04
 archived_at: null
