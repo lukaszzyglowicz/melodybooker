@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-11-04 (Phase 2 rollout planned)
+> Last updated: 2026-11-04 (Phase 3 researched)
 
 ## 1. Strategy
 
@@ -73,8 +73,8 @@ orchestrator updates Status as artifacts appear on disk.
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|---|---|---|---|---|---|
 | 1 | Booking-conflict correctness | Prove the double-booking hard-block holds at boundaries and in persisted DB state, not just the HTTP response | #1 | unit + integration | complete | `context/changes/testing-booking-conflict-correctness/` |
-| 2 | Authorization & ownership boundaries | Prove role and ownership checks hold at the endpoint, independent of UI | #2 | integration | planned | `context/changes/testing-authorization-ownership-boundaries/` |
-| 3 | Reservation form & duration validation hardening | Cover cross-field validation and lesson-duration edge cases | #4, #5 | unit | not started | — |
+| 2 | Authorization & ownership boundaries | Prove role and ownership checks hold at the endpoint, independent of UI | #2 | integration | complete | `context/changes/testing-authorization-ownership-boundaries/` |
+| 3 | Reservation form & duration validation hardening | Cover cross-field validation and lesson-duration edge cases | #4, #5 | unit | researched | `context/changes/testing-reservation-form-duration-validation/` |
 | 4 | Deployment & migration safety gate | Close the gap between InMemory/SQLite test behavior and real SQL Server migration behavior | #3 | process/CI-gate | not started | — |
 
 **Status vocabulary** (fixed — parser literals): `not started` → `change opened` → `researched` → `planned` → `implementing` → `complete`.
