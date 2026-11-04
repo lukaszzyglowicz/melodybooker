@@ -1,0 +1,31 @@
+@using melody.Models.ViewModels
+@using melody.Models.Domain
+@model StudentFormViewModel
+@{
+    ViewData["Title"] = "Add student";
+    var hasTeachers = Model.Teachers.Any();
+}
+
+<h1>Add student</h1>
+
+@if (!hasTeachers)
+{
+    <div class="alert alert-warning">
+        <p>You need to add a teacher before you can create a student.</p>
+        <a class="btn btn-primary" asp-controller="AdminTeachers" asp-action="Create">Add teacher</a>
+    </div>
+}
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Create" method="post">
+    <fieldset disabled="@(!hasTeachers)">
+        <partial name="_StudentFormFields" />
+        <button type="submit" class="btn btn-primary">Create</button>
+    </fieldset>
+    <a asp-action="Index" class="btn btn-link">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

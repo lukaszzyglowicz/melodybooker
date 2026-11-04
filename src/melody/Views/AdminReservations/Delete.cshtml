@@ -1,0 +1,27 @@
+@using melody.Models.ViewModels
+@model AdminReservationDeleteViewModel
+@{
+    ViewData["Title"] = "Cancel reservation";
+}
+
+<h1>Cancel reservation</h1>
+
+<h3>Are you sure you want to cancel this reservation?</h3>
+<dl class="row">
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.TeacherFullName)</dt>
+    <dd class="col-sm-10">@Model.TeacherFullName</dd>
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.StudentFullName)</dt>
+    <dd class="col-sm-10">@Model.StudentFullName</dd>
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.RoomName)</dt>
+    <dd class="col-sm-10">@Model.RoomName</dd>
+    <dt class="col-sm-2">Day</dt>
+    <dd class="col-sm-10">@Model.DayOfWeek</dd>
+    <dt class="col-sm-2">Time</dt>
+    <dd class="col-sm-10">@Model.StartTime.ToString(@"hh\:mm")-@Model.EndTime.ToString(@"hh\:mm")</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Cancel reservation</button>
+    <a asp-action="Index" class="btn btn-link">Back</a>
+</form>

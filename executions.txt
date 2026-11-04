@@ -1,0 +1,44 @@
+/10x-shape @context-idea-notes.md
+/10x-prd
+//10x-tech-stack-selector
+//10xinfra
+"Wykonajmy pierwsze plan wdrożenia w oparciu o @infrastructure.md, zgodnie ze stackiem z @tech-stack.md".
+to ma byc planowanie a nie samo gotowe wdrozenie
+
+Wykonaj research platformy. Uruchom /10x-infra-research z context/foundation/tech-stack.md jako wsadem. Odpowiedz uczciwie na pytania wywiadu (region, długo działające procesy, budżet, portfolio), a po scoringu przepuść wynik przez trzy testy anti-bias: devil's advocate, pre-mortem i unknown unknowns.
+
+Zdefiniuj plan deploymentu. Wejdź w Plan Mode i przygotuj wdrożenie: "Wykonajmy pierwsze wdrożenie w oparciu o @infrastructure.md, zgodnie ze stackiem z @tech-stack.md". Oceń plan, popraw braki, zapisz go jako context/deployment/deploy-plan.md.
+
+Wykonaj pierwsze wdrożenie. Domknij przygotowania (konto Azure, login, baza Supabase, gh auth login), zatwierdź plan i pozwól agentowi przejść do implementacji. Twoja rola: konfiguracja sekretów, uzupełnianie luk i weryfikacja stanu końcowego Bedzie to phase 0  . Po deployu otwórz publiczny URL aplikacji i pochwal się nim na 10xDevs Arena (Circle).
+
+Wykonaj pierwsze wdrożenie. Domknij przygotowania (konto Azure, login, baza , login), zatwierdź plan i pozwól agentowi przejść do implementacji. Twoja rola: konfiguracja sekretów, uzupełnianie luk i weryfikacja stanu końcowego Bedzie to phase 0
+
+
+/10x-roadmap rozpocznijmy prace nad roadmapa /path to prd.md
+
+
+Przeniesienie danych zadane do github issues
+I would like to convert @context\foundation\roadmap.md into a set of gthub issies. Identity task management system, and after my approval migrate roadmap to guthyb using Github CLLI
+
+
+m2l2
+roadmap item -> change-id -> plan.md -> plan review -> implementacja fazy -> Progress
+
+/10x-new role-based-authorization F-01 z roadmap.md
+/10x-plan role-based-authorization
+/10x-implement role-based-authorization phase 1
+/10x-impl-review 
+/10x-archive role-based-authorization
+sam zakomitowalem zmiany kontynuuj
+(kontynuacja /10x-implement: Phase 1 SHA write-back, decyzja "continue_delegate", Phase 2 zaimplementowana przez subagenta, build gate PASS, manual verification gate)
+zaktualizuj mi co zrobilemy tearaz w History.md oraz executions.txt w executions.txt zapsuje jaki commendy wywyaolywamen
+potwierdzam manulana weryfikacjie
+sam zakomitowalem zmiany kontynuuj
+czyli co mam uruchomic aplkacjie? loakalnie i przetetowac?
+lokalnie nie moge uruchomic aplkajciji dostaje blad System.InvalidOperationException: 'A connection string was not found. Please set your connection string.'
+sam skomitowaelm teraz kontynuuuuj
+aktualizuj mi plik Histoty.md oraz executions.txt tak jak zawsze
+
+
+git worktree add ../10xcards-account-deletion -b feature/account-deletion
+git worktree add ../10xcards-ux-improvements -b feature/ux-improvements
