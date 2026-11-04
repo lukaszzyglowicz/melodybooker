@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "postToolUse": [
+      { "type": "command", "command": "node .github/hooks/check-edited-file.js", "timeout": 30 }
+    ],
+    "agentStop": [
+      { "type": "command", "command": "node .github/hooks/end-of-turn.js", "timeout": 120 }
+    ]
+  }
+}
