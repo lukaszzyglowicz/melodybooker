@@ -198,6 +198,6 @@ Not applicable — no schema or data changes.
 
 #### Automated
 
-- [x] 1.1 New tests pass: `dotnet test --filter FullyQualifiedName~AdminRosterAuthorizationTests`
-- [x] 1.2 Full suite passes with no regressions: `dotnet test`
-- [x] 1.3 Deliberate-break check: removing the Administrator role attribute turns the new test red for the right reason, then is restored
+- [x] 1.1 New tests pass: `dotnet test --filter FullyQualifiedName~AdminRosterAuthorizationTests` — 9547e0c
+- [x] 1.2 Full suite passes with no regressions: `dotnet test` — 9547e0c
+- [x] 1.3 Deliberate-break check: removing the Administrator role attribute turns the new test red for the right reason, then is restored — 9547e0c

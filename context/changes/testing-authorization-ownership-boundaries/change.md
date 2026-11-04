@@ -1,7 +1,7 @@
 ---
 change_id: testing-authorization-ownership-boundaries
 title: Testing authorization ownership boundaries
-status: implementing
+status: implemented
 created: 2026-11-04
 updated: 2026-11-04
 archived_at: null
