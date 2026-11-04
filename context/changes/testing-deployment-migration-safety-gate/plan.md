@@ -240,19 +240,19 @@ band; it is not committed).
 
 #### Automated
 
-- [x] 1.1 New test compiles and is discoverable
-- [x] 1.2 Test no-ops cleanly without the env var set
-- [x] 1.3 Full suite still passes unaffected
+- [x] 1.1 New test compiles and is discoverable — 20e5c2c
+- [x] 1.2 Test no-ops cleanly without the env var set — 20e5c2c
+- [x] 1.3 Full suite still passes unaffected — 20e5c2c
 
 #### Manual
 
-- [ ] 1.4 Run locally against ad-hoc SQL Server container, confirm pass/fail behavior
+- [x] 1.4 Run locally against ad-hoc SQL Server container, confirm pass/fail behavior — 20e5c2c
 
 ### Phase 2: CI wiring — service container and gating
 
 #### Automated
 
-- [ ] 2.1 deploy.yml is valid YAML and new job/dependency parse correctly
+- [x] 2.1 deploy.yml is valid YAML and new job/dependency parse correctly
 - [ ] 2.2 migration-safety-gate job appears and passes on push/PR
 
 #### Manual

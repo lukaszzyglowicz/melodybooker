@@ -43,9 +43,37 @@ jobs:
       - name: Test
         run: dotnet test melodybooker.sln --configuration Release --no-build
 
+  migration-safety-gate:
+    runs-on: ubuntu-latest
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          SA_PASSWORD: ${{ secrets.MIGRATION_GATE_SA_PASSWORD }}
+          ACCEPT_EULA: "Y"
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd "exit 0"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Migration dry-run against SQL Server
+        env:
+          MIGRATION_GATE_CONNECTION_STRING: "Server=localhost,1433;Database=melodybooker_migration_gate;User Id=sa;Password=${{ secrets.MIGRATION_GATE_SA_PASSWORD }};TrustServerCertificate=True"
+        run: dotnet test melodybooker.sln --configuration Release --filter FullyQualifiedName~MigrationSafetyGateTests
+
   deploy:
     name: Deploy to dev
-    needs: build-and-test
+    needs: [build-and-test, migration-safety-gate]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
