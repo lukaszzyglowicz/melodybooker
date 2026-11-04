@@ -173,10 +173,10 @@ Not applicable — no schema or data changes.
 
 #### Automated
 
-- [ ] 1.1 New tests pass: `dotnet test --filter "FullyQualifiedName~StudentLessonDurationTests"`
-- [ ] 1.2 New tests pass: `dotnet test --filter "FullyQualifiedName~StudentFormValidationTests"`
-- [ ] 1.3 Full existing suite remains green: `dotnet test`
+- [x] 1.1 New tests pass: `dotnet test --filter "FullyQualifiedName~StudentLessonDurationTests"` — ca36a86
+- [x] 1.2 New tests pass: `dotnet test --filter "FullyQualifiedName~StudentFormValidationTests"` — ca36a86
+- [x] 1.3 Full existing suite remains green: `dotnet test` — ca36a86
 
 #### Manual
 
-- [ ] 1.4 Review both new test files follow the `InstrumentMismatchTests.cs` pure-unit style and have clear test names
+- [x] 1.4 Review both new test files follow the `InstrumentMismatchTests.cs` pure-unit style and have clear test names — ca36a86
