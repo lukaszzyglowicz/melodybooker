@@ -345,13 +345,15 @@ public sealed class HookWorktreeFixture : IDisposable
 
     private static string BuildPathWithoutDotnet()
     {
-        var dotnetExe = ResolveExePath("dotnet");
-        var dotnetDir = Path.GetDirectoryName(dotnetExe)!;
+        // CI images can have more than one "dotnet" on PATH (a preinstalled SDK plus the one
+        // actions/setup-dotnet prepends); removing only the first match leaves the child process
+        // able to fall through to the second one, so every PATH entry containing a dotnet
+        // executable must be dropped, not just the one `which`/`where` happens to resolve first.
+        var exeName = OperatingSystem.IsWindows() ? "dotnet.exe" : "dotnet";
         var path = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
         var filtered = path
             .Split(Path.PathSeparator)
-            .Where(segment => !string.Equals(
-                segment.TrimEnd('\\', '/'), dotnetDir.TrimEnd('\\', '/'), StringComparison.OrdinalIgnoreCase))
+            .Where(segment => !File.Exists(Path.Combine(segment, exeName)))
             .ToArray();
         return string.Join(Path.PathSeparator, filtered);
     }
