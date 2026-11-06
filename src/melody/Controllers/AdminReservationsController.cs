@@ -17,10 +17,12 @@ namespace melody.Controllers;
 public class AdminReservationsController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly ILogger<AdminReservationsController> _logger;
 
-    public AdminReservationsController(ApplicationDbContext context)
+    public AdminReservationsController(ApplicationDbContext context, ILogger<AdminReservationsController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<IActionResult> Index()
@@ -167,10 +169,13 @@ public class AdminReservationsController : Controller
         {
             await _context.SaveChangesAsync();
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
             // Unique-index race (FR-010): another booking for the same room/day/time was saved
             // concurrently. Fall back to the same generic error message.
+            _logger.LogWarning(ex,
+                "Failed to save reservation {ReservationId} to Room {RoomId} on {DayOfWeek} at {StartTime}: possible double-booking race or another database failure.",
+                reservation.Id, model.RoomId, model.DayOfWeek, startTime);
             ModelState.AddModelError(string.Empty, "This room is already booked at that time.");
             return await ReRenderEditAsync(model, reservation);
         }
