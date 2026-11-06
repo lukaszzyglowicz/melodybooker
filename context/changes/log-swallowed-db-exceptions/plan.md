@@ -359,20 +359,20 @@ is not null, and the formatted message contains the expected domain id(s)
 
 #### Automated
 
-- [x] 1.1 `dotnet build melodybooker.sln` succeeds
-- [x] 1.2 Existing tests still pass (AdminReservationOversightTests, TeacherBooksRoomTests, AdminRosterAuthorizationTests, AdminRosterDeletionTests)
+- [x] 1.1 `dotnet build melodybooker.sln` succeeds — d460d6f
+- [x] 1.2 Existing tests still pass (AdminReservationOversightTests, TeacherBooksRoomTests, AdminRosterAuthorizationTests, AdminRosterDeletionTests) — d460d6f
 
 #### Manual
 
-- [x] 1.3 Diff review: user-facing message/redirect/compensating-delete unchanged except for added logging
+- [x] 1.3 Diff review: user-facing message/redirect/compensating-delete unchanged except for added logging — d460d6f
 
 ### Phase 2: Prove the logs actually appear
 
 #### Automated
 
-- [ ] 2.1 `dotnet build melodybooker.sln` succeeds
-- [ ] 2.2 New tests pass (SwallowedExceptionLoggingTests)
-- [ ] 2.3 Full suite still green (`dotnet test melodybooker.sln`)
+- [x] 2.1 `dotnet build melodybooker.sln` succeeds
+- [x] 2.2 New tests pass (SwallowedExceptionLoggingTests)
+- [x] 2.3 Full suite still green (`dotnet test melodybooker.sln`)
 
 #### Manual
 
