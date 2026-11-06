@@ -370,10 +370,10 @@ is not null, and the formatted message contains the expected domain id(s)
 
 #### Automated
 
-- [x] 2.1 `dotnet build melodybooker.sln` succeeds
-- [x] 2.2 New tests pass (SwallowedExceptionLoggingTests)
-- [x] 2.3 Full suite still green (`dotnet test melodybooker.sln`)
+- [x] 2.1 `dotnet build melodybooker.sln` succeeds — 3e76c59
+- [x] 2.2 New tests pass (SwallowedExceptionLoggingTests) — 3e76c59
+- [x] 2.3 Full suite still green (`dotnet test melodybooker.sln`) — 3e76c59
 
 #### Manual
 
-- [ ] 2.4 New tests run twice (plus alongside full suite) with no flakiness
+- [x] 2.4 New tests run twice (plus alongside full suite) with no flakiness

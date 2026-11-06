@@ -1,7 +1,7 @@
 ---
 change_id: log-swallowed-db-exceptions
 title: Log swallowed db exceptions
-status: implementing
+status: implemented
 created: 2026-11-06
 updated: 2026-11-06
 archived_at: null
