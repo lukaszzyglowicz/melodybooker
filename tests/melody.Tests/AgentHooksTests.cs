@@ -330,12 +330,14 @@ public sealed class HookWorktreeFixture : IDisposable
 
     private static string ResolveExePath(string name)
     {
-        var result = RunCapture(Environment.CurrentDirectory, "where", name);
+        // "where" on Windows, "which" everywhere else (CI runs on ubuntu-latest).
+        var finder = OperatingSystem.IsWindows() ? "where" : "which";
+        var result = RunCapture(Environment.CurrentDirectory, finder, name);
         var first = result.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .FirstOrDefault();
         if (string.IsNullOrWhiteSpace(first))
         {
-            throw new InvalidOperationException($"Could not resolve '{name}' via 'where {name}'.");
+            throw new InvalidOperationException($"Could not resolve '{name}' via '{finder} {name}'.");
         }
 
         return first;
