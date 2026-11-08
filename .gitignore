@@ -6,6 +6,14 @@
 # dotenv files
 .env
 
+# Playwright / E2E
+playwright/.auth/
+playwright/.cache/
+.playwright-cli/
+test-results/
+playwright-report/
+blob-report/
+
 # User-specific files
 *.rsuser
 *.suo

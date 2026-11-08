@@ -17,11 +17,16 @@ public class AdminTeachersController : Controller
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ApplicationDbContext _context;
+    private readonly ILogger<AdminTeachersController> _logger;
 
-    public AdminTeachersController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
+    public AdminTeachersController(
+        UserManager<ApplicationUser> userManager,
+        ApplicationDbContext context,
+        ILogger<AdminTeachersController> logger)
     {
         _userManager = userManager;
         _context = context;
+        _logger = logger;
     }
 
     public async Task<IActionResult> Index()
@@ -87,9 +92,12 @@ public class AdminTeachersController : Controller
 
             await _context.SaveChangesAsync();
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
             // Compensate: never leave an ApplicationUser/Teacher-role account behind without a Teacher profile.
+            _logger.LogWarning(ex,
+                "Failed to save Teacher profile for ApplicationUser {ApplicationUserId}; rolling back the created account.",
+                user.Id);
             await _userManager.DeleteAsync(user);
             ModelState.AddModelError(string.Empty, "Something went wrong while creating the teacher profile. Please try again.");
             return View(model);
